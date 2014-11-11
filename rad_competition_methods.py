@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-'''Radiation interception methods'''
+'''Radiation interception methods from multiple species canopy
+Gustavo Camargo'''
 from __future__ import division
 import numpy as np
 import math
