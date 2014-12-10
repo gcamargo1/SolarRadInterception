@@ -202,15 +202,15 @@ def rad_intercpt_sub_daily(atm_transm, atm_press, leaf_transm, leaf_area_index,
     Reference: Campbell, G. S., and J. M. Norman. 1998. Introduction to
      environmental biophysics. Springer, New York.
 
-    >>> rad_intercpt_sub_daily(0.75, 101.3, 0.8,
-                               [0.005, 0.39333333, 0.78166667, 1.17,
-                                1.55833333,1.94666667, 2.335, 2.72333333,
-                                3.11166667, 3.5], 0.5, 2,
+    >>> rad_intercpt_sub_daily(0.75, 101.3, 0.8,\
+                               [0.005, 0.39333333, 0.78166667, 1.17,\
+                                1.55833333,1.94666667, 2.335, 2.72333333,\
+                                3.11166667, 3.5], 0.5, 2,\
                                np.linspace(0, 90, 19))
     (array([ 0.00308931,  0.16775233,  0.25474302,  0.30521083,  0.33553347,
-             0.35400209,  0.36525766,  0.37203142,  0.3759791 ,  0.37812616]),
-     array([ 0.00386786,  0.2287585 ,  0.36321216,  0.44815845,  0.5032327 ,
-             0.53963175,  0.56408442,  0.58077185,  0.59235289,  0.60054507]))
+            0.35400209,  0.36525766,  0.37203142,  0.3759791 ,  0.37812616]), \
+array([ 0.00386786,  0.2287585 ,  0.36321216,  0.44815845,  0.5032327 ,
+            0.53963175,  0.56408442,  0.58077185,  0.59235289,  0.60054507]))
 
     """
     DEG_TO_RAD = math.pi / 180
@@ -282,9 +282,9 @@ def rad_intercpt_cycles(crop_list):
     Reference: Camargo, G.G.T. 2014. Ph.D. Dissertation. Penn State University
 
     >>> rad_intercpt_cycles(([0.5,1,1],[0.5,1,2],[0.5,1,1]))
-    array([0.23758411, 0.30170163, 0.23758411])
+    array([ 0.23758411,  0.30170163,  0.23758411])
     >>> rad_intercpt_cycles(([0.5,1,0.5],[0.6,1.2,1],[0.7,1.4,1.5]))
-    array([0.13822214, 0.29363746, 0.45733724])
+    array([ 0.13822214,  0.29363746,  0.45733724])
      """
     # Variables init
     number_species = len(crop_list)
@@ -309,11 +309,12 @@ def rad_intercpt_cycles(crop_list):
         extinction_coeff[i] = crop_list[i][0]
         leaf_area_index[i] = crop_list[i][1]
         height[i] = crop_list[i][2]
+        k_lai_prod[i] = extinction_coeff[i] * leaf_area_index[i]
         # Transmitted radiation if all species had same height
-        transm_rad[i] = (math.exp(-extinction_coeff[i] * leaf_area_index[i]))
+        transm_rad[i] = math.exp(-k_lai_prod[i])
         # Intercepted radiation if species was dominant
         rad_intercpt_dom[i] = 1 - transm_rad[i]
-        k_lai_prod[i] = (extinction_coeff[i] * leaf_area_index[i])
+        
     # Calculate total transmitance, interception and height dominance
     for i in range(number_species):
         # Total transmitance if all species had the same height
@@ -431,7 +432,7 @@ def rad_intercpt_apsim(crop_list):
      Sci, pp. 637-648.
 
      >>> rad_intercpt_apsim(([0.5, 1],[0.7, 3]))
-     [ 0.17802431  0.74770211]
+     array([ 0.17802431,  0.74770211])
     """
     # Variables init
     number_species = len(crop_list)
@@ -462,3 +463,7 @@ def rad_intercpt_apsim(crop_list):
             rad_intercpt = 0
         rad_intercpt_list[i] = rad_intercpt
     return rad_intercpt_list
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
