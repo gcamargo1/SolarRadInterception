@@ -1,4 +1,4 @@
-SolarRadInterception
+Solar Radiation/Light Interception
 ====================
 
 Three methods to calculate solar radiation interception in multi species canopies.
