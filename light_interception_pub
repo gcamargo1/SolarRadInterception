@@ -311,10 +311,10 @@ def rad_intercpt_cycles(crop_list):
         leaf_area_index[i] = crop_list[i][1]
         height[i] = crop_list[i][2]
         # Transmitted radiation if all species had same height
-        transm_rad[i] = (math.exp(-extinction_coeff[i] * leaf_area_index[i]))
+        transm_rad[i] = math.exp(-extinction_coeff[i] * leaf_area_index[i])
         # Intercepted radiation if species was dominant
         rad_intercpt_dom[i] = 1 - transm_rad[i]
-        k_lai_prod[i] = (extinction_coeff[i] * leaf_area_index[i])
+        k_lai_prod[i] = extinction_coeff[i] * leaf_area_index[i]
     # Calculate total transmitance, interception and height dominance
     for i in range(number_species):
         # Total transmitance if all species had the same height
@@ -337,7 +337,7 @@ def rad_intercpt_cycles(crop_list):
     # Radiation interception by suppressed species once all other species
     # intercepts the radiation first
     for i in range(number_species):
-        rad_intercpt_suppr[i] = (rad_intercpt_dom[i] * transm_rad_others[i])
+        rad_intercpt_suppr[i] = rad_intercpt_dom[i] * transm_rad_others[i]
 
     # Determine two extremes weighing factors: in dominant_fact species will
     # intercept all radiation than it can based on k and LAI, in
@@ -1028,7 +1028,7 @@ plt.ylim(0, 1)
 plt.legend(loc='best', prop={'size': 12}, frameon=False)
 plt.savefig('Figure4.svg')
 # Figure 4 Cycles and APSIM comparison
-plt.figure(4)
+fig4 = plt.figure(4)
 SP1_LAI_PERCENT = 0.33
 SP2_LAI_PERCENT = 0.33
 SP3_LAI_PERCENT = 0.33
@@ -1088,42 +1088,46 @@ for i in range(ARRAY_SIZE):
                                           HEIGHT_SPECIES2[i]],
                                          [K_SPECIES3[i], LAI_SPECIES3[i],
                                           H_SPECIES3[i]]])[2]
-plt.subplot(2, 1, 1).tick_params(axis='both', which='major', labelsize=12)
-plt.plot(LAI_TOTAL, APSIM_SP1, label='APSIM (3 species)', marker='^',
+
+#plt.subplot(2, 1, 1).tick_params(axis='both', which='major', labelsize=12)
+axes1 = fig4.add_axes([0.1, 0.1, 0.8, 0.8])
+axes2 = fig4.add_axes([0.55, 0.55, 0.3, 0.3])
+
+axes1.plot(LAI_TOTAL, APSIM_SP1, label='APSIM (3 species)', marker='^',
          color='k', markerfacecolor='white')
-plt.plot(LAI_TOTAL, CYCLES_SP1, label=r'Cycles SP1 $h$=%.0f' % (HEIGHT_SP1),
+axes1.plot(LAI_TOTAL, CYCLES_SP1, label=r'Cycles SP1 $h$=%.0f' % (HEIGHT_SP1),
          marker='o', color='k', markerfacecolor='white')
-plt.plot(LAI_TOTAL, CYCLES_SP2, label=r'Cycles SP2 $h$=%.0f' % (HEIGHT_SP2),
+axes1.plot(LAI_TOTAL, CYCLES_SP2, label=r'Cycles SP2 $h$=%.0f' % (HEIGHT_SP2),
          marker='o', color='k', markerfacecolor='gray')
-plt.plot(LAI_TOTAL, CYCLES_SP3, label=r'Cycles sp3 $h$=%.0f' % (HEIGHT_SP3),
+axes1.plot(LAI_TOTAL, CYCLES_SP3, label=r'Cycles sp3 $h$=%.0f' % (HEIGHT_SP3),
          marker='o', color='k')
-plt.ylabel('Light interception', fontsize=15, labelpad=8)
-#plt.xlabel('Total leaf area index ' + r'(m$^2$ m$^{-2}$)', fontsize=15,
-#           labelpad=8)
-plt.xlim(0, 7)
-plt.ylim(0, 0.8)
-plt.legend(loc='upper left', prop={'size': 12}, frameon=False)
-plt.text(3, 0.7, 'A', bbox={'facecolor': 'white', 'alpha': 0, 'pad': 10},
-         fontsize=15)
+axes1.set_ylabel('Light interception', fontsize=15, labelpad=8)
+axes1.set_xlabel('Total leaf area index ' + r'(m$^2$ m$^{-2}$)', fontsize=15,
+                 labelpad=8)
+axes1.set_xlim([0, 7])
+axes1.set_ylim([0, 1])
+axes1.legend(loc='upper left', prop={'size': 14}, frameon=False)
+#axes1.text(3, 0.7, 'A', bbox={'facecolor': 'white', 'alpha': 0, 'pad': 10},
+#         fontsize=15)
 
 # Figure 5 Error between Cycles and APSIM comparison
-plt.subplot(2, 1, 2).tick_params(axis='both', which='major', labelsize=12)
-plt.plot(LAI_TOTAL, APSIM_SP1 - APSIM_SP1, label=r'APSIM (3 species)',
+#plt.subplot(2, 1, 2).tick_params(axis='both', which='major', labelsize=12)
+axes2.plot(LAI_TOTAL, APSIM_SP1 - APSIM_SP1, label=r'APSIM (3 species)',
          marker='^', color='k', markerfacecolor='white')
-plt.plot(LAI_TOTAL, CYCLES_SP1 - APSIM_SP1, label=r'Cycles sp 1 $h$=%.0f' %
+axes2.plot(LAI_TOTAL, CYCLES_SP1 - APSIM_SP1, label=r'Cycles sp 1 $h$=%.0f' %
          (HEIGHT_SP1), marker='o', color='k', markerfacecolor='white')
-plt.plot(LAI_TOTAL, CYCLES_SP2 - APSIM_SP1, label=r'Cycles sp 2 $h$=%.0f' %
+axes2.plot(LAI_TOTAL, CYCLES_SP2 - APSIM_SP1, label=r'Cycles sp 2 $h$=%.0f' %
          (HEIGHT_SP2), marker='o', color='k', markerfacecolor='gray')
-plt.plot(LAI_TOTAL, CYCLES_SP3 - APSIM_SP1, label=r'Cycles sp 3 $h$=%.0f' %
+axes2.plot(LAI_TOTAL, CYCLES_SP3 - APSIM_SP1, label=r'Cycles sp 3 $h$=%.0f' %
          (HEIGHT_SP3), marker='o', color='k')
-plt.ylabel('Light interception difference', fontsize=15, labelpad=8)
-plt.xlabel('Total leaf area index ' + r'(m$^2$ m$^{-2}$)', fontsize=15,
-           labelpad=8)
-plt.text(3, 0.15, 'B', bbox={'facecolor': 'white', 'alpha': 0, 'pad': 10},
-         fontsize=15)
+axes2.set_ylabel('Difference', fontsize=15, labelpad=8)
+#axes2.set_xlabel('Total leaf area index ' + r'(m$^2$ m$^{-2}$)', fontsize=15,
+#           labelpad=8)
+#axes2.text(3, 0.15, 'B', bbox={'facecolor': 'white', 'alpha': 0, 'pad': 10},
+#         fontsize=15)
 #plt.legend(loc='best', prop={'size': 12}, frameon=False)
 # Axis removal controls
-plt.setp(plt.subplot(2, 1, 1).get_xticklabels(), visible=False)
+#plt.setp(axes1.get_xticklabels(), visible=False)
 
 plt.savefig('Figure5.svg')
 
@@ -1151,47 +1155,50 @@ kw_final = 0.4621
 for i in length:
     pea_sim_li[i], wheat_sim_li[i] = rad_intercpt_cycles(([kp_final, pea_lai[i], pea_height[i]], [kw_final, wheat_lai[i], wheat_height[i]]))
 
-plt.subplot(3, 1, 1).tick_params(axis='both', which='major', labelsize=14)
-plt.plot(therm_time, pea_lai, label='Pea Barillot',color='k', marker='o', markerfacecolor='white', markersize = 4 )
-plt.plot(None, None, label='Pea Cycles', color='k', dashes=[5,3,1,3])
-plt.plot(therm_time, wheat_lai, label='Wheat Barillot',color='k', marker='^', markerfacecolor='0.75', markersize = 4)
-plt.plot(None, None, label='Wheat Cycles', color='k', dashes=[1,3])
-plt.plot(therm_time, pea_lai + wheat_lai, label='Mixture Barillot',color='k', marker='s', markerfacecolor='black', markersize = 4)
-plt.plot(None, None, label='Mixture Cycles',color='k', dashes=(5,5))
+##plt.subplot(3, 1, 1).tick_params(axis='both', which='major', labelsize=14)
+##plt.plot(therm_time, pea_lai, label='Pea Barillot',color='k', marker='o', markerfacecolor='white', markersize = 4 )
+##plt.plot(None, None, label='Pea Cycles', color='k', dashes=[5,3,1,3])
+##plt.plot(therm_time, wheat_lai, label='Wheat Barillot',color='k', marker='^', markerfacecolor='0.75', markersize = 4)
+##plt.plot(None, None, label='Wheat Cycles', color='k', dashes=[1,3])
+##plt.plot(therm_time, pea_lai + wheat_lai, label='Mixture Barillot',color='k', marker='s', markerfacecolor='black', markersize = 4)
+##plt.plot(None, None, label='Mixture Cycles',color='k', dashes=(5,5))
+##
+##plt.xlim(0, 2000)
+##plt.ylim(0, 7)
+##plt.ylabel('Leaf area index ' + r'(m$^2$ m$^{-2}$)', fontsize=15 , labelpad=17)
+##plt.setp(plt.subplot(3, 1, 1).get_xticklabels(), visible=False)
+##plt.legend(loc='upper left',prop={'size':12},frameon=False)
+##plt.text(50, 0.3, 'A', bbox={'facecolor': 'white', 'alpha': 0, 'pad': 10},
+##         fontsize=15)
+##
+##plt.subplot(3, 1, 2).tick_params(axis='both', which='major', labelsize=14)
+##plt.plot(therm_time, pea_height, label='Pea',color='k', marker='o', markerfacecolor='white', markersize = 4)
+##plt.plot(therm_time, wheat_height, label='Wheat',color='k',  marker='^', markerfacecolor='0.75', markersize = 4)
+##plt.xlim(0, 2000)
+##plt.ylim(0, 1)
+##plt.ylabel("Height (m)", fontsize=15)
+##plt.setp(plt.subplot(3, 1, 2).get_xticklabels(), visible=False)
+##plt.text(50, 0.05, 'B', bbox={'facecolor': 'white', 'alpha': 0, 'pad': 10},
+##         fontsize=15)
 
-plt.xlim(0, 2000)
-plt.ylim(0, 7)
-plt.ylabel('Leaf area index ' + r'(m$^2$ m$^{-2}$)', fontsize=15 , labelpad=17)
-plt.setp(plt.subplot(3, 1, 1).get_xticklabels(), visible=False)
-plt.legend(loc='upper left',prop={'size':12},frameon=False)
-plt.text(50, 0.3, 'A', bbox={'facecolor': 'white', 'alpha': 0, 'pad': 10},
-         fontsize=15)
 
-plt.subplot(3, 1, 2).tick_params(axis='both', which='major', labelsize=14)
-plt.plot(therm_time, pea_height, label='Pea',color='k', marker='o', markerfacecolor='white', markersize = 4)
-plt.plot(therm_time, wheat_height, label='Wheat',color='k',  marker='^', markerfacecolor='0.75', markersize = 4)
-plt.xlim(0, 2000)
-plt.ylim(0, 1)
-plt.ylabel("Height (m)", fontsize=15)
-plt.setp(plt.subplot(3, 1, 2).get_xticklabels(), visible=False)
-plt.text(50, 0.05, 'B', bbox={'facecolor': 'white', 'alpha': 0, 'pad': 10},
-         fontsize=15)
+#plt.subplot(3, 1, 3).tick_params(axis='both', which='major', labelsize=14)
+plt.plot(therm_time, pea_sim_li + wheat_sim_li, label='Mixture Cycles',color='k', dashes=(5,5), linewidth = 2)
+plt.plot(therm_time, pea_light_intercpt + wheat_light_intercpt, label='Mixture Barillot',color='k', marker='s', markerfacecolor='white', markersize = 5, linewidth = 0)
+plt.plot(therm_time, pea_sim_li, label='Pea Cycles', color='k', dashes=[5,3,1,3], linewidth = 2)
+plt.plot(therm_time, pea_light_intercpt, label='Pea Barillot',color='k', marker='o', markerfacecolor='white', markersize = 4, linewidth = 0)
+plt.plot(therm_time, wheat_sim_li, label='Wheat Cycles', color='k', dashes=[1,3], linewidth = 2)
+plt.plot(therm_time, wheat_light_intercpt, label='Wheat Barillot',color='k',  marker='^', markerfacecolor='k', markersize = 4, linewidth = 0)
 
 
-plt.subplot(3, 1, 3).tick_params(axis='both', which='major', labelsize=14)
-plt.plot(therm_time, pea_sim_li, label='Pea Cycles', color='k', dashes=[5,3,1,3], linewidth = 1.5)
-plt.plot(therm_time, pea_light_intercpt, label='Pea Barillot',color='k', marker='o', markerfacecolor='white', markersize = 4)
-plt.plot(therm_time, wheat_sim_li, label='Wheat Cycles', color='k', dashes=[1,3], linewidth = 1.5)
-plt.plot(therm_time, wheat_light_intercpt, label='Wheat Barillot',color='k',  marker='^', markerfacecolor='0.75', markersize = 4)
-plt.plot(therm_time, pea_light_intercpt + wheat_light_intercpt, label='Mixture Barillot',color='k', marker='s', markerfacecolor='black', markersize = 4)
-plt.plot(therm_time, pea_sim_li + wheat_sim_li, label='Mixture Cycles',color='k', dashes=(5,5), linewidth = 1.5)
 plt.xlim(0, 2000)
 plt.ylim(0, 1)
 plt.xlabel("Thermal time (C-day)", fontsize=15)
 plt.ylabel("Light interception", fontsize=15)
-plt.text(50, 0.05, 'C', bbox={'facecolor': 'white', 'alpha': 0, 'pad': 10},
-         fontsize=15)
+#plt.text(50, 0.05, 'C', bbox={'facecolor': 'white', 'alpha': 0, 'pad': 10},
+#         fontsize=15)
 plt.subplots_adjust(hspace=0.1)
+plt.legend(loc='upper left',prop={'size':14},frameon=False)
 plt.savefig('Figure6.svg')
 
 plt.show()
