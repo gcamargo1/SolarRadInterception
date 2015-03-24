@@ -465,7 +465,7 @@ def rad_intercpt_apsim(crop_list):
 """Graphs for Light interception publication"""
 
 # Figure 0
-plt.figure(0)
+plt.figure(0, figsize=[8,8])
 plt.subplot(1, 1, 1).tick_params(axis='both', which='major', labelsize=12)
 
 atm_transm = 0.75
@@ -516,15 +516,15 @@ plt.plot(LAI_TOTAL, APSIM_SP1, label=r'Daily Cycles sp1 $k$=%.1f $L$%%=%.0f' %
          (K_SP1, SP1_LAI_PERCENT * 100), marker='o', color='k')
 plt.plot(LAI_TOTAL, APSIM_SP2, label=r'Daily Cycles sp2 $k$=%.1f $L$%%=%.0f' %
          (K_SP2, SP2_LAI_PERCENT * 100), marker='v', color='k')
-plt.ylabel('Light interception', fontsize=15, labelpad=8)
-plt.xlabel('Total leaf area index ' + r'(m$^2$ m$^{-2}$)', fontsize=15,
+plt.ylabel('Light interception', fontsize=14, labelpad=8)
+plt.xlabel('Total leaf area index ' + r'(m$^2$ m$^{-2}$)', fontsize=14,
            labelpad=8)
 plt.xlim(0, 7)
 plt.ylim(0, 0.8)
-plt.legend(loc='best', prop={'size': 12}, frameon=False)
+plt.legend(loc='upper left', prop={'size': 14}, frameon=False)
 plt.savefig('Figure1.svg')
 # Figure 1
-plt.figure(1, figsize=(14, 10))
+plt.figure(1, figsize=(8, 28))
 # Graph 1.1 : 50 / 50 lai; k1 = 0.4, k2 = 0.6
 SP1_LAI_PERCENT = 0.5
 SP2_LAI_PERCENT = 0.5
@@ -562,7 +562,7 @@ for i in range(ARRAY_SIZE):
     APSIM_SP2[i] = rad_intercpt_apsim([[K_SPECIES1[i], LAI_SPECIES1[i]],
                                        [K_SPECIES2[i], LAI_SPECIES2[i]]])[1]
 
-plt.subplot(1, 3, 1).tick_params(axis='both', which='major', labelsize=12)
+plt.subplot(3, 1, 1).tick_params(axis='both', which='major', labelsize=20)
 plt.plot(LAI_TOTAL, WALLACE_SP1, label=r'Wallace sp1 $k$=%.1f $L$%%=%.0f' %
          (K_SP1, SP1_LAI_PERCENT * 100), marker='o', color='k',
          markerfacecolor='white')
@@ -573,14 +573,14 @@ plt.plot(LAI_TOTAL, WALLACE_SP2, label=r'Wallace sp2 $k$=%.1f $L$%%=%.0f' %
          markerfacecolor='white')
 plt.plot(LAI_TOTAL, APSIM_SP2, label=r'Cycles sp2 $k$=%.1f $L$%%=%.0f' %
          (K_SP2, SP2_LAI_PERCENT * 100), marker='v', color='k')
-plt.ylabel('Light interception', fontsize=15, labelpad=8)
-plt.xlabel('Total leaf area index ' + r'(m$^2$ m$^{-2}$)', fontsize=15,
-           labelpad=8)
-plt.text(0.455, 0.81, 'A', bbox={'facecolor': 'white', 'alpha': 0, 'pad': 10},
-         fontsize=12)
+plt.ylabel('Light interception', fontsize=22, labelpad=8)
+#plt.xlabel('Total leaf area index ' + r'(m$^2$ m$^{-2}$)', fontsize=15,
+#           labelpad=8)
+plt.text(6, 0.9, 'A', bbox={'facecolor': 'white', 'alpha': 0, 'pad': 10},
+         fontsize=22)
 plt.xlim(0, 7)
 plt.ylim(0, 1)
-plt.legend(loc='best', prop={'size': 12}, frameon=False)
+plt.legend(loc='upper left', prop={'size': 18}, frameon=False)
 # Graph 1.2 : 80 / 20 lai; k1 = 0.4, k2 = 0.6
 SP1_LAI_PERCENT = 0.8
 SP2_LAI_PERCENT = 0.2
@@ -616,7 +616,7 @@ for i in range(ARRAY_SIZE):
                                        [K_SPECIES2[i], LAI_SPECIES2[i]]])[1]
 
 
-plt.subplot(1, 3, 2).tick_params(axis='both', which='major', labelsize=12)
+plt.subplot(3, 1, 2).tick_params(axis='both', which='major', labelsize=20)
 plt.plot(LAI_TOTAL, WALLACE_SP1, label=r'Wallace sp1 $k$=%.1f $L$%%=%.0f' %
          (K_SP1, SP1_LAI_PERCENT * 100), marker='o', color='k',
          markerfacecolor='white')
@@ -627,13 +627,14 @@ plt.plot(LAI_TOTAL, WALLACE_SP2, label=r'Wallace sp2 $k$=%.1f $L$%%=%.0f' %
          markerfacecolor='white')
 plt.plot(LAI_TOTAL, APSIM_SP2, label=r'Cycles sp2 $k$=%.1f $L$%%=%.0f' %
          (K_SP2, SP2_LAI_PERCENT * 100), marker='v', color='k')
-plt.xlabel('Total leaf area index ' + r'(m$^2$ m$^{-2}$)', fontsize=15,
-           labelpad=8)
-plt.text(0.455, 0.81, 'B', bbox={'facecolor': 'white', 'alpha': 0, 'pad': 10},
-         fontsize=12)
+plt.ylabel('Light interception', fontsize=22, labelpad=8)
+#plt.xlabel('Total leaf area index ' + r'(m$^2$ m$^{-2}$)', fontsize=15,
+#           labelpad=8)
+plt.text(6, 0.8, 'B', bbox={'facecolor': 'white', 'alpha': 0, 'pad': 10},
+         fontsize=22)
 plt.xlim(0, 7)
 plt.ylim(0, 1)
-plt.legend(loc='best', prop={'size': 12}, frameon=False)
+plt.legend(loc='upper left', prop={'size': 18}, frameon=False)
 # Graph 1.3 : 20 / 80 lai; k1 = 0.4, k2 = 0.6
 SP1_LAI_PERCENT = 0.2
 SP2_LAI_PERCENT = 0.8
@@ -667,7 +668,7 @@ for i in range(ARRAY_SIZE):
                                             SP_HEIGHT[i]]])[1]
     APSIM_SP2[i] = rad_intercpt_apsim([[K_SPECIES1[i], LAI_SPECIES1[i]],
                                        [K_SPECIES2[i], LAI_SPECIES2[i]]])[1]
-plt.subplot(1, 3, 3).tick_params(axis='both', which='major', labelsize=12)
+plt.subplot(3, 1, 3).tick_params(axis='both', which='major', labelsize=20)
 plt.plot(LAI_TOTAL, WALLACE_SP1, label=r'Wallace sp1 $k$=%.1f $L$%%=%.0f' %
          (K_SP1, SP1_LAI_PERCENT * 100), marker='o', color='k',
          markerfacecolor='white')
@@ -678,22 +679,24 @@ plt.plot(LAI_TOTAL, WALLACE_SP2, label=r'Wallace sp2 $k$=%.1f $L$%%=%.0f' %
          markerfacecolor='white')
 plt.plot(LAI_TOTAL, APSIM_SP2, label=r'Cycles sp2 $k$=%.1f $L$%%=%.0f' %
          (K_SP2, SP2_LAI_PERCENT * 100), marker='v', color='k')
-plt.xlabel('Total leaf area index ' + r'(m$^2$ m$^{-2}$)', fontsize=15,
+plt.ylabel('Light interception', fontsize=22, labelpad=8)
+plt.xlabel('Total leaf area index ' + r'(m$^2$ m$^{-2}$)', fontsize=22,
            labelpad=8)
-plt.text(0.455, 0.81, 'C', bbox={'facecolor': 'white', 'alpha': 0, 'pad': 10},
-         fontsize=12)
+plt.text(6, 0.9, 'C', bbox={'facecolor': 'white', 'alpha': 0, 'pad': 10},
+         fontsize=22)
 plt.xlim(0, 7)
 plt.ylim(0, 1)
-plt.legend(loc='best', prop={'size': 12}, frameon=False)
-plt.setp(plt.subplot(1, 3, 3).get_yticklabels(), visible=False)
-plt.setp(plt.subplot(1, 3, 2).get_yticklabels(), visible=False)
+plt.legend(loc='upper left', prop={'size': 18}, frameon=False)
+plt.setp(plt.subplot(3, 1, 1).get_xticklabels(), visible=False)
+plt.setp(plt.subplot(3, 1, 2).get_xticklabels(), visible=False)
+plt.subplots_adjust(hspace=0.05)
 plt.savefig('Figure2.svg')
-plt.subplots_adjust(wspace=0.1)
+
 
 # Figure 2 Wallace with different heights
 plt.figure(2, figsize=(16, 12))
 # Graph 2.1: lai:50/50, k:0.5/0.5, SP_HEIGHT:1/0.5
-plt.subplot(3, 3, 1).tick_params(axis='both', which='major', labelsize=12)
+plt.subplot(3, 3, 1).tick_params(axis='both', which='major', labelsize=16)
 SP1_LAI_PERCENT = 0.5
 SP2_LAI_PERCENT = 0.5
 MIN_LAI = 0.01
@@ -728,14 +731,14 @@ plt.plot(LAI_TOTAL, WALLACE_SP1, label=r'sp 1 $k$=%.1f $L$%%=%.0f $h$=%.1f' %
 plt.plot(LAI_TOTAL, WALLACE_SP2, label=r'sp 2 $k$=%.1f $L$%%=%.0f $h$=%.1f' %
          (K_SP2, SP2_LAI_PERCENT * 100, HEIGHT_SP2), marker='o', color='k',
          markerfacecolor='white')
-plt.text(0.35, 0.8, 'A', bbox={'facecolor': 'white', 'alpha': 0, 'pad': 10},
-         fontsize=12)
-plt.ylabel('Light interception', fontsize=15, labelpad=8)
+plt.text(0.35, 0.7, 'A', bbox={'facecolor': 'white', 'alpha': 0, 'pad': 10},
+         fontsize=18)
+plt.ylabel('Light interception', fontsize=18, labelpad=8)
 plt.xlim(0, 7)
 plt.ylim(0, 1.15)
-plt.legend(loc='upper left', prop={'size': 12}, frameon=False)
+plt.legend(loc='upper left', prop={'size': 16}, frameon=False)
 # Graph 2.2: lai:50/50, k:0.4/0.6, SP_HEIGHT:0.5/1
-plt.subplot(3, 3, 2).tick_params(axis='both', which='major', labelsize=12)
+plt.subplot(3, 3, 2).tick_params(axis='both', which='major', labelsize=16)
 SP1_LAI_PERCENT = 0.5
 SP2_LAI_PERCENT = 0.5
 MIN_LAI = 0.01
@@ -770,14 +773,14 @@ plt.plot(LAI_TOTAL, WALLACE_SP1, label=r'sp 1 $k$=%.1f $L$%%=%.0f $h$=%.1f' %
 plt.plot(LAI_TOTAL, WALLACE_SP2, label=r'sp 2 $k$=%.1f $L$%%=%.0f $h$=%.1f' %
          (K_SP2, SP2_LAI_PERCENT*100, HEIGHT_SP2), marker='o', color='k',
          markerfacecolor='white')
-plt.text(0.35, 0.8, 'B', bbox={'facecolor': 'white', 'alpha': 0, 'pad': 10},
-         fontsize=12)
+plt.text(0.35, 0.7, 'B', bbox={'facecolor': 'white', 'alpha': 0, 'pad': 10},
+         fontsize=18)
 # plt.ylabel('Light interception')
 plt.xlim(0, 7)
 plt.ylim(0, 1.15)
-plt.legend(loc='upper left', prop={'size': 12}, frameon=False)
+plt.legend(loc='upper left', prop={'size': 16}, frameon=False)
 # Graph 2.3: lai:50/50, k:0.4/0.6, SP_HEIGHT:1/0.5
-plt.subplot(3, 3, 3).tick_params(axis='both', which='major', labelsize=12)
+plt.subplot(3, 3, 3).tick_params(axis='both', which='major', labelsize=16)
 SP1_LAI_PERCENT = 0.5
 SP2_LAI_PERCENT = 0.5
 MIN_LAI = 0.01
@@ -812,13 +815,13 @@ plt.plot(LAI_TOTAL, WALLACE_SP1, label=r'sp 1 $k$=%.1f $L$%%=%.0f $h$=%.1f' %
 plt.plot(LAI_TOTAL, WALLACE_SP2, label=r'sp 2 $k$=%.1f $L$%%=%.0f $h$=%.1f' %
          (K_SP2, SP2_LAI_PERCENT*100, HEIGHT_SP2), marker='o', color='k',
          markerfacecolor='white')
-plt.text(0.35, 0.8, 'C', bbox={'facecolor': 'white', 'alpha': 0, 'pad': 10},
-         fontsize=12)
+plt.text(0.35, 0.7, 'C', bbox={'facecolor': 'white', 'alpha': 0, 'pad': 10},
+         fontsize=18)
 plt.xlim(0, 7)
 plt.ylim(0, 1.15)
-plt.legend(loc='upper left', prop={'size': 12}, frameon=False)
+plt.legend(loc='upper left', prop={'size': 16}, frameon=False)
 # Graph 2.4: lai:80/20, k:0.4/0.6, SP_HEIGHT:0.5/1
-plt.subplot(3, 3, 4).tick_params(axis='both', which='major', labelsize=12)
+plt.subplot(3, 3, 4).tick_params(axis='both', which='major', labelsize=16)
 SP1_LAI_PERCENT = 0.8
 SP2_LAI_PERCENT = 0.2
 MIN_LAI = 0.01
@@ -853,16 +856,16 @@ plt.plot(LAI_TOTAL, WALLACE_SP1, label=r'sp 1 $k$=%.1f $L$%%=%.0f $h$=%.1f' %
 plt.plot(LAI_TOTAL, WALLACE_SP2, label=r'sp 2 $k$=%.1f $L$%%=%.0f $h$=%.1f' %
          (K_SP2, SP2_LAI_PERCENT*100, HEIGHT_SP2), marker='o', color='k',
          markerfacecolor='white')
-plt.xlabel('Total leaf area index ' + r'(m$^2$ m$^{-2}$)', fontsize=15,
+plt.xlabel('Total leaf area index ' + r'(m$^2$ m$^{-2}$)', fontsize=18,
            labelpad=8)
-plt.ylabel('Light interception', fontsize=15, labelpad=8)
-plt.text(0.35, 0.8, 'D', bbox={'facecolor': 'white', 'alpha': 0, 'pad': 10},
-         fontsize=12)
+plt.ylabel('Light interception', fontsize=18, labelpad=8)
+plt.text(0.35, 0.7, 'D', bbox={'facecolor': 'white', 'alpha': 0, 'pad': 10},
+         fontsize=18)
 plt.xlim(0, 7)
 plt.ylim(0, 1.15)
-plt.legend(loc='upper left', prop={'size': 12}, frameon=False)
+plt.legend(loc='upper left', prop={'size': 16}, frameon=False)
 # Graph 2.5: lai:20/80, k:0.4/0.6, SP_HEIGHT:1/0.5
-plt.subplot(3, 3, 5).tick_params(axis='both', which='major', labelsize=12)
+plt.subplot(3, 3, 5).tick_params(axis='both', which='major', labelsize=16)
 SP1_LAI_PERCENT = 0.2
 SP2_LAI_PERCENT = 0.8
 MIN_LAI = 0.01
@@ -899,15 +902,15 @@ plt.plot(LAI_TOTAL, WALLACE_SP2, label=r'sp 2 $k$=%.1f $L$%%=%.0f $h$=%.1f' %
          (K_SP2, SP2_LAI_PERCENT * 100, HEIGHT_SP2), marker='o', color='k',
          markerfacecolor='white')
 
-plt.xlabel('Total leaf area index ' + r'(m$^2$ m$^{-2}$)', fontsize=15,
+plt.xlabel('Total leaf area index ' + r'(m$^2$ m$^{-2}$)', fontsize=18,
            labelpad=8)
-plt.text(0.35, 0.8, 'E', bbox={'facecolor': 'white', 'alpha': 0, 'pad': 10},
-         fontsize=12)
+plt.text(0.35, 0.7, 'E', bbox={'facecolor': 'white', 'alpha': 0, 'pad': 10},
+         fontsize=18)
 plt.xlim(0, 7)
 plt.ylim(0, 1.15)
-plt.legend(loc='upper left', prop={'size': 12}, frameon=False)
+plt.legend(loc='upper left', prop={'size': 16}, frameon=False)
 # Graph 2.6: lai:20/80, k:0.4/0.6, SP_HEIGHT:0.5/1
-plt.subplot(3, 3, 6).tick_params(axis='both', which='major', labelsize=12)
+plt.subplot(3, 3, 6).tick_params(axis='both', which='major', labelsize=16)
 SP1_LAI_PERCENT = 0.2
 SP2_LAI_PERCENT = 0.8
 MIN_LAI = 0.01
@@ -944,13 +947,13 @@ plt.plot(LAI_TOTAL, WALLACE_SP2, label=r'sp 2 $k$=%.1f $L$%%=%.0f $h$=%.1f' %
          (K_SP2, SP2_LAI_PERCENT*100, HEIGHT_SP2), marker='o', color='k',
          markerfacecolor='white')
 
-plt.xlabel('Total leaf area index ' + r'(m$^2$ m$^{-2}$)', fontsize=15,
+plt.xlabel('Total leaf area index ' + r'(m$^2$ m$^{-2}$)', fontsize=18,
            labelpad=8)
-plt.text(0.35, 0.8, 'F', bbox={'facecolor': 'white', 'alpha': 0, 'pad': 10},
-         fontsize=12)
+plt.text(0.35, 0.7, 'F', bbox={'facecolor': 'white', 'alpha': 0, 'pad': 10},
+         fontsize=18)
 plt.xlim(0, 7)
 plt.ylim(0, 1.15)
-plt.legend(loc='upper left', prop={'size': 12}, frameon=False)
+plt.legend(loc='upper left', prop={'size': 16}, frameon=False)
 # Axis removal controls
 plt.setp(plt.subplot(3, 3, 1).get_xticklabels(), visible=False)
 plt.setp(plt.subplot(3, 3, 2).get_yticklabels(), visible=False)
@@ -964,7 +967,7 @@ plt.subplots_adjust(wspace=0.07, hspace=0.1)
 plt.savefig('Figure3.svg')
 # Figure 3 Cycles and Wallace comparison
 plt.figure(3)
-plt.subplot(1, 1, 1).tick_params(axis='both', which='major', labelsize=12)
+plt.subplot(1, 1, 1).tick_params(axis='both', which='major', labelsize=16)
 SP1_LAI_PERCENT = 0.5
 SP2_LAI_PERCENT = 0.5
 MIN_LAI = 0.01
@@ -1018,12 +1021,12 @@ plt.plot(LAI_TOTAL, WALLACE_SP2,
 plt.plot(LAI_TOTAL, CYCLES_SP2,
          label=r'Cycles SP2 $k$=%.1f $L$%%=%.0f $h$=%.1f' %
          (K_SP2, SP2_LAI_PERCENT*100, HEIGHT_SP2), marker='v', color='k')
-plt.ylabel('Light interception', fontsize=15, labelpad=8)
-plt.xlabel('Total leaf area index ' + r'(m$^2$ m$^{-2}$)', fontsize=15,
+plt.ylabel('Light interception', fontsize=18, labelpad=8)
+plt.xlabel('Total leaf area index ' + r'(m$^2$ m$^{-2}$)', fontsize=18,
            labelpad=8)
 plt.xlim(0, 7)
 plt.ylim(0, 1)
-plt.legend(loc='best', prop={'size': 12}, frameon=False)
+plt.legend(loc='upper left', prop={'size': 14}, frameon=False)
 plt.savefig('Figure4.svg')
 # Figure 4 Cycles and APSIM comparison
 fig4 = plt.figure(4)
@@ -1092,19 +1095,20 @@ axes2 = fig4.add_axes([0.55, 0.55, 0.3, 0.3])
 
 axes1.plot(LAI_TOTAL, APSIM_SP1, label='APSIM (3 species)', marker='^',
          color='k', markerfacecolor='white')
-axes1.plot(LAI_TOTAL, CYCLES_SP1, label=r'Cycles SP1 $h$=%.0f' % (HEIGHT_SP1),
+axes1.plot(LAI_TOTAL, CYCLES_SP1, label=r'Cycles sp 1 $h$=%.0f' % (HEIGHT_SP1),
          marker='o', color='k', markerfacecolor='white')
-axes1.plot(LAI_TOTAL, CYCLES_SP2, label=r'Cycles SP2 $h$=%.0f' % (HEIGHT_SP2),
+axes1.plot(LAI_TOTAL, CYCLES_SP2, label=r'Cycles sp 2 $h$=%.0f' % (HEIGHT_SP2),
          marker='o', color='k', markerfacecolor='gray')
-axes1.plot(LAI_TOTAL, CYCLES_SP3, label=r'Cycles sp3 $h$=%.0f' % (HEIGHT_SP3),
+axes1.plot(LAI_TOTAL, CYCLES_SP3, label=r'Cycles sp 3 $h$=%.0f' % (HEIGHT_SP3),
          marker='o', color='k')
-axes1.set_ylabel('Light interception', fontsize=15, labelpad=8)
-axes1.set_xlabel('Total leaf area index ' + r'(m$^2$ m$^{-2}$)', fontsize=15,
+axes1.set_ylabel('Light interception', fontsize=18, labelpad=8)
+axes1.set_xlabel('Total leaf area index ' + r'(m$^2$ m$^{-2}$)', fontsize=18,
                  labelpad=8)
 axes1.set_xlim([0, 7])
 axes1.set_ylim([0, 1])
-axes1.legend(loc='upper left', prop={'size': 14}, frameon=False)
-
+axes1.legend(loc='upper left', prop={'size': 16}, frameon=False)
+axes1.xaxis.set_tick_params(labelsize=16)
+axes1.yaxis.set_tick_params(labelsize=16)
 # Figure 4 Error between Cycles and APSIM comparison
 axes2.plot(LAI_TOTAL, APSIM_SP1 - APSIM_SP1, label=r'APSIM (3 species)',
          marker='^', color='k', markerfacecolor='white')
@@ -1114,14 +1118,17 @@ axes2.plot(LAI_TOTAL, CYCLES_SP2 - APSIM_SP1, label=r'Cycles sp 2 $h$=%.0f' %
          (HEIGHT_SP2), marker='o', color='k', markerfacecolor='gray')
 axes2.plot(LAI_TOTAL, CYCLES_SP3 - APSIM_SP1, label=r'Cycles sp 3 $h$=%.0f' %
          (HEIGHT_SP3), marker='o', color='k')
-axes2.set_ylabel('Difference', fontsize=15, labelpad=8)
-
+axes2.set_ylabel('Difference', fontsize=18, labelpad=8)
+axes2.set_yticks([-0.2, -0.1, 0.0, 0.1, 0.2])
+axes2.yaxis.set_tick_params(labelsize=16)
+axes2.xaxis.set_tick_params(labelsize=16)
 plt.savefig('Figure5.svg')
 
 
 # Barilot vs Cycles
-plt.figure(5, figsize=(7, 10))
-
+fig5 = plt.figure(5, figsize=(7, 9))
+axes1 = fig5.add_axes([0.1, 0.1, 0.8, 0.8])
+axes2 = fig5.add_axes([0.62, 0.13, 0.24, 0.20])
 fname = 'barillot_data.csv'
 
 data = np.loadtxt(fname, dtype='float', delimiter=',', skiprows=1)
@@ -1144,27 +1151,46 @@ for i in length:
         ([kp_final, pea_lai[i], pea_height[i]],
          [kw_final, wheat_lai[i], wheat_height[i]]))
 
-plt.plot(therm_time, pea_sim_li + wheat_sim_li, label='Mixture Cycles',
+axes1.plot(therm_time, pea_sim_li + wheat_sim_li, label='Mixture Cycles',
     color='k', dashes=(5,5), linewidth = 2)
-plt.plot(therm_time, pea_light_intercpt + wheat_light_intercpt,
+axes1.plot(therm_time, pea_light_intercpt + wheat_light_intercpt,
     label='Mixture Barillot',color='k', marker='s', markerfacecolor='white',
     markersize = 5, linewidth = 0)
-plt.plot(therm_time, pea_sim_li, label='Pea Cycles', color='k',
+axes1.plot(therm_time, pea_sim_li, label='Pea Cycles', color='k',
     dashes=[5,3,1,3], linewidth = 2)
-plt.plot(therm_time, pea_light_intercpt, label='Pea Barillot', color='k',
+axes1.plot(therm_time, pea_light_intercpt, label='Pea Barillot', color='k',
     marker='o', markerfacecolor='white', markersize = 4, linewidth = 0)
-plt.plot(therm_time, wheat_sim_li, label='Wheat Cycles', color='k',
+axes1.plot(therm_time, wheat_sim_li, label='Wheat Cycles', color='k',
     dashes=[1,3], linewidth = 2)
-plt.plot(therm_time, wheat_light_intercpt, label='Wheat Barillot',color='k',
+axes1.plot(therm_time, wheat_light_intercpt, label='Wheat Barillot',color='k',
     marker='^', markerfacecolor='k', markersize = 4, linewidth = 0)
 
+axes1.set_xlim(0, 2000)
+axes1.set_ylim(0, 1)
+axes1.xaxis.set_tick_params(labelsize=16)
+axes1.yaxis.set_tick_params(labelsize=16)
+axes1.set_xlabel("Thermal time (C-day)", fontsize=18)
+axes1.set_ylabel("Light interception", fontsize=18)
+#axes1.subplots_adjust(hspace=0.1)
+axes1.legend(loc='upper left', prop={'size':14}, frameon=False)
 
-plt.xlim(0, 2000)
-plt.ylim(0, 1)
-plt.xlabel("Thermal time (C-day)", fontsize=15)
-plt.ylabel("Light interception", fontsize=15)
-plt.subplots_adjust(hspace=0.1)
-plt.legend(loc='upper left', prop={'size':14}, frameon=False)
+total_diff = (pea_sim_li + wheat_sim_li) - (pea_light_intercpt + wheat_light_intercpt)
+pea_diff = abs(pea_sim_li - pea_light_intercpt)
+wheat_diff = abs(wheat_sim_li - wheat_light_intercpt)
+pea_ave_abs_bias = pea_diff.mean()
+wheat_ave_abs_bias = wheat_diff.mean()
+
+axes2.plot(therm_time, pea_diff, label='Pea', color='k', marker='8', markerfacecolor='white',
+    markersize = 3, linewidth = 0)
+axes2.plot(therm_time, wheat_diff, ':',label='Wheat', color='k', marker='^',
+    markersize = 3, linewidth = 0)
+axes2.legend(loc='upper left', prop={'size':11}, frameon=False)
+axes2.set_yticks([0.0, 0.05, 0.1, 0.15])
+axes2.set_xticks([0, 1000, 2000])
+axes2.set_ylabel('Absolute difference', fontsize=15, labelpad=8)
+axes2.text(-30, 0.16, 'Mean pea bias = %.3f'%pea_ave_abs_bias, fontsize=11)
+axes2.text(-30, 0.18, 'Mean wheat bias = %.3f'%wheat_ave_abs_bias, fontsize=11)
+
 plt.savefig('Figure6.svg')
 
 plt.show()
