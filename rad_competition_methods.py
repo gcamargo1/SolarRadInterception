@@ -105,9 +105,9 @@ def rad_ext_coeff_black_diff(x_area_ratio, leaf_area_index):
      environmental biophysics. Springer, New York. Eq. 15.5
 
     >>> rad_ext_coeff_black_diff(2, 0.1)
-    0.9710451784887358
+    0.9710451784887356
     >>> rad_ext_coeff_black_diff(0, 0.1)
-    0.9099461266386164
+    0.9099461266386163
     """
     assert (x_area_ratio and leaf_area_index) >= 0
     STEP_SIZE = 90
@@ -309,6 +309,9 @@ def rad_intercpt_cycles(crop_list):
         extinction_coeff[i] = crop_list[i][0]
         leaf_area_index[i] = crop_list[i][1]
         height[i] = crop_list[i][2]
+        assert extinction_coeff[i] > 0
+        assert leaf_area_index[i] > 0
+        assert height[i] > 0
         k_lai_prod[i] = extinction_coeff[i] * leaf_area_index[i]
         # Transmitted radiation if all species had same height
         transm_rad[i] = math.exp(-k_lai_prod[i])
