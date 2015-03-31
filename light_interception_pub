@@ -38,6 +38,7 @@ def height_weight_fact(height_dom, dominant_fact, suppressed_fact,
         return (1 + (height_dom - 1) / (number_species - 1) *
                 (dominant_fact - 1))
 
+
 def opt_air_mass(atm_press, solar_zenith_angle):
     """(float, float) -> float
 
