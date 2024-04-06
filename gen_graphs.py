@@ -3,11 +3,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from rad_competition_methods import (
-    rad_intercpt_sub_daily,
     rad_intercpt_apsim,
     rad_intercpt_wallace,
     rad_intercpt_cycles,
 )
+from environ_biophysics import rad_intercpt_sub_daily
 
 # Figure 0
 plt.figure(0, figsize=[8, 8])
