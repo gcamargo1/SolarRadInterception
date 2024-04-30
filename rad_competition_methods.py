@@ -3,7 +3,7 @@ import math
 
 import numpy as np
 
-from environ_biophysics import height_weight_fact
+from environ_biophysics import get_height_weight_factor
 
 
 def rad_intercpt_cycles(
@@ -94,7 +94,7 @@ def rad_intercpt_cycles(
         )
         # Based on species height determine a height weight factor in between
         # dominant_fact and suppressed_fact values usin linear interpolation
-        hght_wght_fct[i] = height_weight_fact(
+        hght_wght_fct[i] = get_height_weight_factor(
             height_dom[i], dominant_fact[i], suppressed_fact[i], number_species
         )
         # Adjust extinction coefficient and leaf area index product
