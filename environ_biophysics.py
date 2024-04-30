@@ -71,7 +71,7 @@ def rad_ext_coeff_black_beam(solar_zenith_angle: float, x_area_ratio: float) -> 
         x_area_ratio: average area of canopy elements projected on to the horizontal plane divided by the average area projected on to a vertical plane
 
     References:
-         Campbell, G.S., Norman, J.M., 1998. Introduction to environmental biophysics. Springer, New York. Eq. 15.4
+         Campbell, G.S., Norman, J.M., 1998. Introduction to environmental biophysics. Springer, New York. page 251. Eq. 15.4
 
     Examples:
         >>> rad_ext_coeff_black_beam(0.087, 0)
@@ -184,10 +184,10 @@ def rad_intercpt_sub_daily(
     atm_transm: float,
     atm_press: float,
     leaf_transm: float,
-    leaf_area_index: float,
+    leaf_area_index: np.array,
     x_sp1: float,
     x_sp2: float,
-    angles_deg: float,
+    angles_deg: np.array,
 ) -> tuple[np.array, np.array]:
     """Return sub daily radiation interception for two species.
 
@@ -202,13 +202,6 @@ def rad_intercpt_sub_daily(
 
     References:
          Campbell, G. S., and J. M. Norman. 1998. Introduction to environmental biophysics. Springer, New York.
-
-    Examples:
-        # >>> rad_intercpt_sub_daily(0.75, 101.3, 0.8, [0.005, 0.39333333, 0.78166667, 1.17,    1.55833333,1.94666667, 2.335, 2.72333333,3.11166667, 3.5], 0.5, 2,np.linspace(0, 90, 19))
-        # (array([ 0.00308931,  0.16775233,  0.25474302,  0.30521083,  0.33553347,
-        #  0.35400209,  0.36525766,  0.37203142,  0.3759791 ,  0.37812616]),
-        #  array([ 0.00386786,  0.2287585 ,  0.36321216,  0.44815845,  0.5032327 ,
-        #  0.53963175,  0.56408442,  0.58077185,  0.59235289,  0.60054507]))
     """
     DEG_TO_RAD = math.pi / 180
     angles = angles_deg * DEG_TO_RAD
