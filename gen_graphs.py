@@ -99,7 +99,7 @@ plt.xlabel("Total leaf area index " + r"(m$^2$ m$^{-2}$)", fontsize=14, labelpad
 plt.xlim(0, 7)
 plt.ylim(0, 0.8)
 plt.legend(loc="upper left", prop={"size": 14}, frameon=False)
-plt.savefig("Figure1.svg")
+plt.savefig("figures/Figure1.svg")
 # Figure 1
 plt.figure(1, figsize=(8, 28))
 # Graph 1.1 : 50 / 50 lai; k1 = 0.4, k2 = 0.6
@@ -333,7 +333,7 @@ plt.legend(loc="upper left", prop={"size": 18}, frameon=False)
 plt.setp(plt.subplot(3, 1, 1).get_xticklabels(), visible=False)
 plt.setp(plt.subplot(3, 1, 2).get_xticklabels(), visible=False)
 plt.subplots_adjust(hspace=0.05)
-plt.savefig("Figure2.svg")
+plt.savefig("figures/Figure2.svg")
 
 
 # Figure 2 Wallace with different heights
@@ -694,7 +694,7 @@ plt.setp(plt.subplot(3, 3, 2).get_xticklabels(), visible=False)
 plt.setp(plt.subplot(3, 3, 2).get_yticklabels(), visible=False)
 plt.setp(plt.subplot(3, 3, 6).get_yticklabels(), visible=False)
 plt.subplots_adjust(wspace=0.07, hspace=0.1)
-plt.savefig("Figure3.svg")
+plt.savefig("figures/Figure3.svg")
 # Figure 3 Cycles and Wallace comparison
 plt.figure(3)
 plt.subplot(1, 1, 1).tick_params(axis="both", which="major", labelsize=16)
@@ -782,7 +782,7 @@ plt.xlabel("Total leaf area index " + r"(m$^2$ m$^{-2}$)", fontsize=18, labelpad
 plt.xlim(0, 7)
 plt.ylim(0, 1)
 plt.legend(loc="upper left", prop={"size": 14}, frameon=False)
-plt.savefig("Figure4.svg")
+plt.savefig("figures/Figure4.svg")
 # Figure 4 Cycles and APSIM comparison
 fig4 = plt.figure(4)
 SP1_LAI_PERCENT = 0.33
@@ -936,7 +936,7 @@ axes2.set_ylabel("Difference", fontsize=18, labelpad=8)
 axes2.set_yticks([-0.2, -0.1, 0.0, 0.1, 0.2])
 axes2.yaxis.set_tick_params(labelsize=16)
 axes2.xaxis.set_tick_params(labelsize=16)
-plt.savefig("Figure5.svg")
+plt.savefig("figures/Figure5.svg")
 
 
 # Barilot vs Cycles
@@ -1056,7 +1056,7 @@ axes2.plot(
     color="k",
     marker="^",
     markersize=3,
-    linewidth=0,
+    linewidth=0.1,
 )
 axes2.legend(loc="upper left", prop={"size": 11}, frameon=False)
 axes2.set_yticks([0.0, 0.05, 0.1, 0.15])
@@ -1065,6 +1065,6 @@ axes2.set_ylabel("Absolute difference", fontsize=15, labelpad=8)
 axes2.text(-30, 0.16, "Mean pea bias = %.3f" % pea_ave_abs_bias, fontsize=11)
 axes2.text(-30, 0.18, "Mean wheat bias = %.3f" % wheat_ave_abs_bias, fontsize=11)
 
-plt.savefig("Figure6.svg")
+plt.savefig("figures/Figure6.svg")
 
-plt.show()
+# plt.show()

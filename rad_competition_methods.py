@@ -64,7 +64,7 @@ def rad_intercpt_cycles(
     total_interception = 1 - total_transm
     # All species but ith species rad transmission
     for i in range(number_species):
-        all_species = range(number_species)  # list with all species
+        all_species = list(range(number_species))  # list with all species
         all_species.pop(i)  # remove ith species from list
         all_species_but_ith = all_species  # list of non-dominant species
         total_transm_but_ith_sp = 1  # sum of non-dominant species transmission
