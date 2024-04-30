@@ -1,5 +1,4 @@
-# Created by https://www.toptal.com/developers/gitignore/api/python,pycharm
-# Edit at https://www.toptal.com/developers/gitignore?templates=python,pycharm
+figures/*
 
 ### PyCharm ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
@@ -286,4 +285,3 @@ poetry.toml
 # LSP config files
 pyrightconfig.json
 
-# End of https://www.toptal.com/developers/gitignore/api/python,pycharm

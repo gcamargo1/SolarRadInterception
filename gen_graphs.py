@@ -943,7 +943,7 @@ plt.savefig("figures/Figure5.svg")
 fig5 = plt.figure(5, figsize=(7, 9))
 axes1 = fig5.add_axes([0.1, 0.1, 0.8, 0.8])
 axes2 = fig5.add_axes([0.62, 0.13, 0.24, 0.20])
-fname = "barillot_data.csv"
+fname = "data/barillot_data.csv"
 
 data = np.loadtxt(fname, dtype="float", delimiter=",", skiprows=1)
 
@@ -1029,7 +1029,6 @@ axes1.xaxis.set_tick_params(labelsize=16)
 axes1.yaxis.set_tick_params(labelsize=16)
 axes1.set_xlabel("Thermal time (C-day)", fontsize=18)
 axes1.set_ylabel("Light interception", fontsize=18)
-# axes1.subplots_adjust(hspace=0.1)
 axes1.legend(loc="upper left", prop={"size": 14}, frameon=False)
 
 total_diff = (pea_sim_li + wheat_sim_li) - (pea_light_intercpt + wheat_light_intercpt)
@@ -1066,5 +1065,3 @@ axes2.text(-30, 0.16, "Mean pea bias = %.3f" % pea_ave_abs_bias, fontsize=11)
 axes2.text(-30, 0.18, "Mean wheat bias = %.3f" % wheat_ave_abs_bias, fontsize=11)
 
 plt.savefig("figures/Figure6.svg")
-
-# plt.show()
