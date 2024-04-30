@@ -31,68 +31,65 @@ def gen_fig1():
             3.5,
         ]
     )
-    X_SP1 = 0.5
-    X_SP2 = 2
+    x_sp1 = 0.5
+    x_sp2 = 2
     angles_deg = np.linspace(0, 90, 19)
-    SP1, SP2 = get_solar_radiation_interception_sub_daily(
-        atm_transm, atm_press, leaf_transm, leaf_area_index, X_SP1, X_SP2, angles_deg
+    sp1, sp2 = get_solar_radiation_interception_sub_daily(
+        atm_transm, atm_press, leaf_transm, leaf_area_index, x_sp1, x_sp2, angles_deg
     )
-    TOT_LAI = 2 * leaf_area_index
-    SP1_LAI_PERCENT = 0.5
-    SP2_LAI_PERCENT = 0.5
-    MIN_LAI = 0.01
-    MAX_LAI = 7
-    LAI_SPECIES1 = np.linspace(
-        MIN_LAI * SP1_LAI_PERCENT, MAX_LAI * SP1_LAI_PERCENT, num=10
+    tot_lai = 2 * leaf_area_index
+    sp1_lai_percent = 0.5
+    sp2_lai_percent = 0.5
+    min_lai = 0.01
+    max_lai = 7
+    lai_species1 = np.linspace(
+        min_lai * sp1_lai_percent, max_lai * sp1_lai_percent, num=10
     )
-    LAI_SPECIES2 = np.linspace(
-        MIN_LAI * SP2_LAI_PERCENT, MAX_LAI * SP2_LAI_PERCENT, num=10
+    lai_species2 = np.linspace(
+        min_lai * sp2_lai_percent, max_lai * sp2_lai_percent, num=10
     )
-    LAI_TOTAL = LAI_SPECIES1 + LAI_SPECIES2
-    ARRAY_SIZE = len(LAI_SPECIES1)
-    K_SP1 = 0.4
-    K_SP2 = 0.6
-    K_SPECIES1 = np.ones(ARRAY_SIZE) * K_SP1
-    K_SPECIES2 = np.ones(ARRAY_SIZE) * K_SP2
-    SP_HEIGHT = np.ones(ARRAY_SIZE)  # height equals 1
-    WALLACE_SP1 = np.zeros(ARRAY_SIZE)
-    WALLACE_SP2 = np.zeros(ARRAY_SIZE)
-    APSIM_SP1 = np.zeros(ARRAY_SIZE)
-    APSIM_SP2 = np.zeros(ARRAY_SIZE)
-    for i in range(ARRAY_SIZE):
-        APSIM_SP1[i] = rad_intercpt_apsim(
-            [[K_SPECIES1[i], LAI_SPECIES1[i]], [K_SPECIES2[i], LAI_SPECIES2[i]]]
+    lai_total = lai_species1 + lai_species2
+    array_size = len(lai_species1)
+    k_sp1 = 0.4
+    k_sp2 = 0.6
+    k_species1 = np.ones(array_size) * k_sp1
+    k_species2 = np.ones(array_size) * k_sp2
+    apsim_sp1 = np.zeros(array_size)
+    apsim_sp2 = np.zeros(array_size)
+    for i in range(array_size):
+        apsim_sp1[i] = rad_intercpt_apsim(
+            [[k_species1[i], lai_species1[i]], [k_species2[i], lai_species2[i]]]
         )[0]
-        APSIM_SP2[i] = rad_intercpt_apsim(
-            [[K_SPECIES1[i], LAI_SPECIES1[i]], [K_SPECIES2[i], LAI_SPECIES2[i]]]
+        apsim_sp2[i] = rad_intercpt_apsim(
+            [[k_species1[i], lai_species1[i]], [k_species2[i], lai_species2[i]]]
         )[1]
     plt.plot(
-        TOT_LAI,
-        SP1,
-        label=r"Sub-daily sp1 %s=0.5 $L$%%=%.0f" % (r"$\chi$", SP1_LAI_PERCENT * 100),
+        tot_lai,
+        sp1,
+        label=r"Sub-daily sp1 %s=0.5 $L$%%=%.0f" % (r"$\chi$", sp1_lai_percent * 100),
         marker="o",
         color="k",
         markerfacecolor="white",
     )
     plt.plot(
-        TOT_LAI,
-        SP2,
-        label=r"Sub-daily sp2 %s=2 $L$%%=%.0f" % (r"$\chi$", SP1_LAI_PERCENT * 100),
+        tot_lai,
+        sp2,
+        label=r"Sub-daily sp2 %s=2 $L$%%=%.0f" % (r"$\chi$", sp1_lai_percent * 100),
         marker="v",
         color="k",
         markerfacecolor="white",
     )
     plt.plot(
-        LAI_TOTAL,
-        APSIM_SP1,
-        label=r"Daily Cycles sp1 $k$=%.1f $L$%%=%.0f" % (K_SP1, SP1_LAI_PERCENT * 100),
+        lai_total,
+        apsim_sp1,
+        label=r"Daily Cycles sp1 $k$=%.1f $L$%%=%.0f" % (k_sp1, sp1_lai_percent * 100),
         marker="o",
         color="k",
     )
     plt.plot(
-        LAI_TOTAL,
-        APSIM_SP2,
-        label=r"Daily Cycles sp2 $k$=%.1f $L$%%=%.0f" % (K_SP2, SP2_LAI_PERCENT * 100),
+        lai_total,
+        apsim_sp2,
+        label=r"Daily Cycles sp2 $k$=%.1f $L$%%=%.0f" % (k_sp2, sp2_lai_percent * 100),
         marker="v",
         color="k",
     )
@@ -107,75 +104,76 @@ def gen_fig1():
 def gen_fig2():
     # Figure 2
     plt.figure(1, figsize=(8, 28))
+
     # Graph 2.1 : 50 / 50 lai; k1 = 0.4, k2 = 0.6
-    SP1_LAI_PERCENT = 0.5
-    SP2_LAI_PERCENT = 0.5
-    MIN_LAI = 0.01
-    MAX_LAI = 7
-    LAI_SPECIES1 = np.linspace(
-        MIN_LAI * SP1_LAI_PERCENT, MAX_LAI * SP1_LAI_PERCENT, num=10
+    sp1_lai_percent = 0.5
+    sp2_lai_percent = 0.5
+    min_lai = 0.01
+    max_lai = 7
+    lai_species1 = np.linspace(
+        min_lai * sp1_lai_percent, max_lai * sp1_lai_percent, num=10
     )
-    LAI_SPECIES2 = np.linspace(
-        MIN_LAI * SP2_LAI_PERCENT, MAX_LAI * SP2_LAI_PERCENT, num=10
+    lai_species2 = np.linspace(
+        min_lai * sp2_lai_percent, max_lai * sp2_lai_percent, num=10
     )
-    LAI_TOTAL = LAI_SPECIES1 + LAI_SPECIES2
-    ARRAY_SIZE = len(LAI_SPECIES1)
-    K_SP1 = 0.4
-    K_SP2 = 0.6
-    K_SPECIES1 = np.ones(ARRAY_SIZE) * K_SP1
-    K_SPECIES2 = np.ones(ARRAY_SIZE) * K_SP2
-    SP_HEIGHT = np.ones(ARRAY_SIZE)  # height equals 1
-    WALLACE_SP1 = np.zeros(ARRAY_SIZE)
-    WALLACE_SP2 = np.zeros(ARRAY_SIZE)
-    APSIM_SP1 = np.zeros(ARRAY_SIZE)
-    APSIM_SP2 = np.zeros(ARRAY_SIZE)
-    for i in range(ARRAY_SIZE):
-        WALLACE_SP1[i] = rad_intercpt_wallace(
+    lai_total = lai_species1 + lai_species2
+    array_size = len(lai_species1)
+    k_sp1 = 0.4
+    k_sp2 = 0.6
+    k_species1 = np.ones(array_size) * k_sp1
+    k_species2 = np.ones(array_size) * k_sp2
+    sp_height = np.ones(array_size)  # height equals 1
+    wallace_sp1 = np.zeros(array_size)
+    wallace_sp2 = np.zeros(array_size)
+    apsim_sp1 = np.zeros(array_size)
+    apsim_sp2 = np.zeros(array_size)
+    for i in range(array_size):
+        wallace_sp1[i] = rad_intercpt_wallace(
             [
-                [K_SPECIES1[i], LAI_SPECIES1[i], SP_HEIGHT[i]],
-                [K_SPECIES2[i], LAI_SPECIES2[i], SP_HEIGHT[i]],
+                [k_species1[i], lai_species1[i], sp_height[i]],
+                [k_species2[i], lai_species2[i], sp_height[i]],
             ]
         )[0]
-        APSIM_SP1[i] = rad_intercpt_apsim(
-            [[K_SPECIES1[i], LAI_SPECIES1[i]], [K_SPECIES2[i], LAI_SPECIES2[i]]]
+        apsim_sp1[i] = rad_intercpt_apsim(
+            [[k_species1[i], lai_species1[i]], [k_species2[i], lai_species2[i]]]
         )[0]
-        WALLACE_SP2[i] = rad_intercpt_wallace(
+        wallace_sp2[i] = rad_intercpt_wallace(
             [
-                [K_SPECIES1[i], LAI_SPECIES1[i], SP_HEIGHT[i]],
-                [K_SPECIES2[i], LAI_SPECIES2[i], SP_HEIGHT[i]],
+                [k_species1[i], lai_species1[i], sp_height[i]],
+                [k_species2[i], lai_species2[i], sp_height[i]],
             ]
         )[1]
-        APSIM_SP2[i] = rad_intercpt_apsim(
-            [[K_SPECIES1[i], LAI_SPECIES1[i]], [K_SPECIES2[i], LAI_SPECIES2[i]]]
+        apsim_sp2[i] = rad_intercpt_apsim(
+            [[k_species1[i], lai_species1[i]], [k_species2[i], lai_species2[i]]]
         )[1]
     plt.subplot(3, 1, 1).tick_params(axis="both", which="major", labelsize=20)
     plt.plot(
-        LAI_TOTAL,
-        WALLACE_SP1,
-        label=r"Wallace sp1 $k$=%.1f $L$%%=%.0f" % (K_SP1, SP1_LAI_PERCENT * 100),
+        lai_total,
+        wallace_sp1,
+        label=r"Wallace sp1 $k$=%.1f $L$%%=%.0f" % (k_sp1, sp1_lai_percent * 100),
         marker="o",
         color="k",
         markerfacecolor="white",
     )
     plt.plot(
-        LAI_TOTAL,
-        APSIM_SP1,
-        label=r"Cycles sp1 $k$=%.1f $L$%%=%.0f" % (K_SP1, SP1_LAI_PERCENT * 100),
+        lai_total,
+        apsim_sp1,
+        label=r"Cycles sp1 $k$=%.1f $L$%%=%.0f" % (k_sp1, sp1_lai_percent * 100),
         marker="o",
         color="k",
     )
     plt.plot(
-        LAI_TOTAL,
-        WALLACE_SP2,
-        label=r"Wallace sp2 $k$=%.1f $L$%%=%.0f" % (K_SP2, SP2_LAI_PERCENT * 100),
+        lai_total,
+        wallace_sp2,
+        label=r"Wallace sp2 $k$=%.1f $L$%%=%.0f" % (k_sp2, sp2_lai_percent * 100),
         marker="v",
         color="k",
         markerfacecolor="white",
     )
     plt.plot(
-        LAI_TOTAL,
-        APSIM_SP2,
-        label=r"Cycles sp2 $k$=%.1f $L$%%=%.0f" % (K_SP2, SP2_LAI_PERCENT * 100),
+        lai_total,
+        apsim_sp2,
+        label=r"Cycles sp2 $k$=%.1f $L$%%=%.0f" % (k_sp2, sp2_lai_percent * 100),
         marker="v",
         color="k",
     )
@@ -187,74 +185,74 @@ def gen_fig2():
     plt.ylim(0, 1)
     plt.legend(loc="upper left", prop={"size": 18}, frameon=False)
     # Graph 2.2 : 80 / 20 lai; k1 = 0.4, k2 = 0.6
-    SP1_LAI_PERCENT = 0.8
-    SP2_LAI_PERCENT = 0.2
-    MIN_LAI = 0.01
-    MAX_LAI = 7
-    LAI_SPECIES1 = np.linspace(
-        MIN_LAI * SP1_LAI_PERCENT, MAX_LAI * SP1_LAI_PERCENT, num=10
+    sp1_lai_percent = 0.8
+    sp2_lai_percent = 0.2
+    min_lai = 0.01
+    max_lai = 7
+    lai_species1 = np.linspace(
+        min_lai * sp1_lai_percent, max_lai * sp1_lai_percent, num=10
     )
-    LAI_SPECIES2 = np.linspace(
-        MIN_LAI * SP2_LAI_PERCENT, MAX_LAI * SP2_LAI_PERCENT, num=10
+    lai_species2 = np.linspace(
+        min_lai * sp2_lai_percent, max_lai * sp2_lai_percent, num=10
     )
-    LAI_TOTAL = LAI_SPECIES1 + LAI_SPECIES2
-    ARRAY_SIZE = len(LAI_SPECIES1)
-    K_SP1 = 0.4
-    K_SP2 = 0.6
-    K_SPECIES1 = np.ones(ARRAY_SIZE) * K_SP1
-    K_SPECIES2 = np.ones(ARRAY_SIZE) * K_SP2
-    SP_HEIGHT = np.ones(ARRAY_SIZE)  # height equals 1
-    WALLACE_SP1 = np.zeros(ARRAY_SIZE)
-    WALLACE_SP2 = np.zeros(ARRAY_SIZE)
-    APSIM_SP1 = np.zeros(ARRAY_SIZE)
-    APSIM_SP2 = np.zeros(ARRAY_SIZE)
-    for i in range(ARRAY_SIZE):
-        WALLACE_SP1[i] = rad_intercpt_wallace(
+    lai_total = lai_species1 + lai_species2
+    array_size = len(lai_species1)
+    k_sp1 = 0.4
+    k_sp2 = 0.6
+    k_species1 = np.ones(array_size) * k_sp1
+    k_species2 = np.ones(array_size) * k_sp2
+    sp_height = np.ones(array_size)  # height equals 1
+    wallace_sp1 = np.zeros(array_size)
+    wallace_sp2 = np.zeros(array_size)
+    apsim_sp1 = np.zeros(array_size)
+    apsim_sp2 = np.zeros(array_size)
+    for i in range(array_size):
+        wallace_sp1[i] = rad_intercpt_wallace(
             [
-                [K_SPECIES1[i], LAI_SPECIES1[i], SP_HEIGHT[i]],
-                [K_SPECIES2[i], LAI_SPECIES2[i], SP_HEIGHT[i]],
+                [k_species1[i], lai_species1[i], sp_height[i]],
+                [k_species2[i], lai_species2[i], sp_height[i]],
             ]
         )[0]
-        APSIM_SP1[i] = rad_intercpt_apsim(
-            [[K_SPECIES1[i], LAI_SPECIES1[i]], [K_SPECIES2[i], LAI_SPECIES2[i]]]
+        apsim_sp1[i] = rad_intercpt_apsim(
+            [[k_species1[i], lai_species1[i]], [k_species2[i], lai_species2[i]]]
         )[0]
-        WALLACE_SP2[i] = rad_intercpt_wallace(
+        wallace_sp2[i] = rad_intercpt_wallace(
             [
-                [K_SPECIES1[i], LAI_SPECIES1[i], SP_HEIGHT[i]],
-                [K_SPECIES2[i], LAI_SPECIES2[i], SP_HEIGHT[i]],
+                [k_species1[i], lai_species1[i], sp_height[i]],
+                [k_species2[i], lai_species2[i], sp_height[i]],
             ]
         )[1]
-        APSIM_SP2[i] = rad_intercpt_apsim(
-            [[K_SPECIES1[i], LAI_SPECIES1[i]], [K_SPECIES2[i], LAI_SPECIES2[i]]]
+        apsim_sp2[i] = rad_intercpt_apsim(
+            [[k_species1[i], lai_species1[i]], [k_species2[i], lai_species2[i]]]
         )[1]
     plt.subplot(3, 1, 2).tick_params(axis="both", which="major", labelsize=20)
     plt.plot(
-        LAI_TOTAL,
-        WALLACE_SP1,
-        label=r"Wallace sp1 $k$=%.1f $L$%%=%.0f" % (K_SP1, SP1_LAI_PERCENT * 100),
+        lai_total,
+        wallace_sp1,
+        label=r"Wallace sp1 $k$=%.1f $L$%%=%.0f" % (k_sp1, sp1_lai_percent * 100),
         marker="o",
         color="k",
         markerfacecolor="white",
     )
     plt.plot(
-        LAI_TOTAL,
-        APSIM_SP1,
-        label=r"Cycles sp1 $k$=%.1f $L$%%=%.0f" % (K_SP1, SP1_LAI_PERCENT * 100),
+        lai_total,
+        apsim_sp1,
+        label=r"Cycles sp1 $k$=%.1f $L$%%=%.0f" % (k_sp1, sp1_lai_percent * 100),
         marker="o",
         color="k",
     )
     plt.plot(
-        LAI_TOTAL,
-        WALLACE_SP2,
-        label=r"Wallace sp2 $k$=%.1f $L$%%=%.0f" % (K_SP2, SP2_LAI_PERCENT * 100),
+        lai_total,
+        wallace_sp2,
+        label=r"Wallace sp2 $k$=%.1f $L$%%=%.0f" % (k_sp2, sp2_lai_percent * 100),
         marker="v",
         color="k",
         markerfacecolor="white",
     )
     plt.plot(
-        LAI_TOTAL,
-        APSIM_SP2,
-        label=r"Cycles sp2 $k$=%.1f $L$%%=%.0f" % (K_SP2, SP2_LAI_PERCENT * 100),
+        lai_total,
+        apsim_sp2,
+        label=r"Cycles sp2 $k$=%.1f $L$%%=%.0f" % (k_sp2, sp2_lai_percent * 100),
         marker="v",
         color="k",
     )
@@ -266,74 +264,74 @@ def gen_fig2():
     plt.ylim(0, 1)
     plt.legend(loc="upper left", prop={"size": 18}, frameon=False)
     # Graph 1.3 : 20 / 80 lai; k1 = 0.4, k2 = 0.6
-    SP1_LAI_PERCENT = 0.2
-    SP2_LAI_PERCENT = 0.8
-    MIN_LAI = 0.01
-    MAX_LAI = 7
-    LAI_SPECIES1 = np.linspace(
-        MIN_LAI * SP1_LAI_PERCENT, MAX_LAI * SP1_LAI_PERCENT, num=10
+    sp1_lai_percent = 0.2
+    sp2_lai_percent = 0.8
+    min_lai = 0.01
+    max_lai = 7
+    lai_species1 = np.linspace(
+        min_lai * sp1_lai_percent, max_lai * sp1_lai_percent, num=10
     )
-    LAI_SPECIES2 = np.linspace(
-        MIN_LAI * SP2_LAI_PERCENT, MAX_LAI * SP2_LAI_PERCENT, num=10
+    lai_species2 = np.linspace(
+        min_lai * sp2_lai_percent, max_lai * sp2_lai_percent, num=10
     )
-    LAI_TOTAL = LAI_SPECIES1 + LAI_SPECIES2
-    ARRAY_SIZE = len(LAI_SPECIES1)
-    K_SP1 = 0.4
-    K_SP2 = 0.6
-    K_SPECIES1 = np.ones(ARRAY_SIZE) * K_SP1
-    K_SPECIES2 = np.ones(ARRAY_SIZE) * K_SP2
-    SP_HEIGHT = np.ones(ARRAY_SIZE)  # height equals 1
-    WALLACE_SP1 = np.zeros(ARRAY_SIZE)
-    WALLACE_SP2 = np.zeros(ARRAY_SIZE)
-    APSIM_SP1 = np.zeros(ARRAY_SIZE)
-    APSIM_SP2 = np.zeros(ARRAY_SIZE)
-    for i in range(ARRAY_SIZE):
-        WALLACE_SP1[i] = rad_intercpt_wallace(
+    lai_total = lai_species1 + lai_species2
+    array_size = len(lai_species1)
+    k_sp1 = 0.4
+    k_sp2 = 0.6
+    k_species1 = np.ones(array_size) * k_sp1
+    k_species2 = np.ones(array_size) * k_sp2
+    sp_height = np.ones(array_size)  # height equals 1
+    wallace_sp1 = np.zeros(array_size)
+    wallace_sp2 = np.zeros(array_size)
+    apsim_sp1 = np.zeros(array_size)
+    apsim_sp2 = np.zeros(array_size)
+    for i in range(array_size):
+        wallace_sp1[i] = rad_intercpt_wallace(
             [
-                [K_SPECIES1[i], LAI_SPECIES1[i], SP_HEIGHT[i]],
-                [K_SPECIES2[i], LAI_SPECIES2[i], SP_HEIGHT[i]],
+                [k_species1[i], lai_species1[i], sp_height[i]],
+                [k_species2[i], lai_species2[i], sp_height[i]],
             ]
         )[0]
-        APSIM_SP1[i] = rad_intercpt_apsim(
-            [[K_SPECIES1[i], LAI_SPECIES1[i]], [K_SPECIES2[i], LAI_SPECIES2[i]]]
+        apsim_sp1[i] = rad_intercpt_apsim(
+            [[k_species1[i], lai_species1[i]], [k_species2[i], lai_species2[i]]]
         )[0]
-        WALLACE_SP2[i] = rad_intercpt_wallace(
+        wallace_sp2[i] = rad_intercpt_wallace(
             [
-                [K_SPECIES1[i], LAI_SPECIES1[i], SP_HEIGHT[i]],
-                [K_SPECIES2[i], LAI_SPECIES2[i], SP_HEIGHT[i]],
+                [k_species1[i], lai_species1[i], sp_height[i]],
+                [k_species2[i], lai_species2[i], sp_height[i]],
             ]
         )[1]
-        APSIM_SP2[i] = rad_intercpt_apsim(
-            [[K_SPECIES1[i], LAI_SPECIES1[i]], [K_SPECIES2[i], LAI_SPECIES2[i]]]
+        apsim_sp2[i] = rad_intercpt_apsim(
+            [[k_species1[i], lai_species1[i]], [k_species2[i], lai_species2[i]]]
         )[1]
     plt.subplot(3, 1, 3).tick_params(axis="both", which="major", labelsize=20)
     plt.plot(
-        LAI_TOTAL,
-        WALLACE_SP1,
-        label=r"Wallace sp1 $k$=%.1f $L$%%=%.0f" % (K_SP1, SP1_LAI_PERCENT * 100),
+        lai_total,
+        wallace_sp1,
+        label=r"Wallace sp1 $k$=%.1f $L$%%=%.0f" % (k_sp1, sp1_lai_percent * 100),
         marker="o",
         color="k",
         markerfacecolor="white",
     )
     plt.plot(
-        LAI_TOTAL,
-        APSIM_SP1,
-        label=r"Cycles sp1 $k$=%.1f $L$%%=%.0f" % (K_SP1, SP1_LAI_PERCENT * 100),
+        lai_total,
+        apsim_sp1,
+        label=r"Cycles sp1 $k$=%.1f $L$%%=%.0f" % (k_sp1, sp1_lai_percent * 100),
         marker="o",
         color="k",
     )
     plt.plot(
-        LAI_TOTAL,
-        WALLACE_SP2,
-        label=r"Wallace sp2 $k$=%.1f $L$%%=%.0f" % (K_SP2, SP2_LAI_PERCENT * 100),
+        lai_total,
+        wallace_sp2,
+        label=r"Wallace sp2 $k$=%.1f $L$%%=%.0f" % (k_sp2, sp2_lai_percent * 100),
         marker="v",
         color="k",
         markerfacecolor="white",
     )
     plt.plot(
-        LAI_TOTAL,
-        APSIM_SP2,
-        label=r"Cycles sp2 $k$=%.1f $L$%%=%.0f" % (K_SP2, SP2_LAI_PERCENT * 100),
+        lai_total,
+        apsim_sp2,
+        label=r"Cycles sp2 $k$=%.1f $L$%%=%.0f" % (k_sp2, sp2_lai_percent * 100),
         marker="v",
         color="k",
     )
@@ -354,56 +352,56 @@ def gen_fig2():
 def gen_fig3():
     # Figure 3 Wallace with different heights
     plt.figure(2, figsize=(16, 12))
-    # Graph 3.1: lai:50/50, k:0.5/0.5, SP_HEIGHT:1/0.5
+    # Graph 3.1: lai:50/50, k:0.5/0.5, sp_height:1/0.5
     plt.subplot(3, 3, 1).tick_params(axis="both", which="major", labelsize=16)
-    SP1_LAI_PERCENT = 0.5
-    SP2_LAI_PERCENT = 0.5
-    MIN_LAI = 0.01
-    MAX_LAI = 7
-    LAI_SPECIES1 = np.linspace(
-        MIN_LAI * SP1_LAI_PERCENT, MAX_LAI * SP1_LAI_PERCENT, num=10
+    sp1_lai_percent = 0.5
+    sp2_lai_percent = 0.5
+    min_lai = 0.01
+    max_lai = 7
+    lai_species1 = np.linspace(
+        min_lai * sp1_lai_percent, max_lai * sp1_lai_percent, num=10
     )
-    LAI_SPECIES2 = np.linspace(
-        MIN_LAI * SP2_LAI_PERCENT, MAX_LAI * SP2_LAI_PERCENT, num=10
+    lai_species2 = np.linspace(
+        min_lai * sp2_lai_percent, max_lai * sp2_lai_percent, num=10
     )
-    LAI_TOTAL = LAI_SPECIES1 + LAI_SPECIES2
-    ARRAY_SIZE = len(LAI_SPECIES1)
-    K_SP1 = 0.5
-    K_SP2 = 0.5
-    HEIGHT_SP1 = 1
-    HEIGHT_SP2 = 0.5
-    K_SPECIES1 = np.ones(ARRAY_SIZE) * K_SP1
-    K_SPECIES2 = np.ones(ARRAY_SIZE) * K_SP2
-    HEIGHT_SPECIES1 = np.ones(ARRAY_SIZE) * HEIGHT_SP1
-    HEIGHT_SPECIES2 = np.ones(ARRAY_SIZE) * HEIGHT_SP2
-    WALLACE_SP1 = np.zeros(ARRAY_SIZE)
-    WALLACE_SP2 = np.zeros(ARRAY_SIZE)
-    for i in range(ARRAY_SIZE):
-        WALLACE_SP1[i] = rad_intercpt_cycles(
+    lai_total = lai_species1 + lai_species2
+    array_size = len(lai_species1)
+    k_sp1 = 0.5
+    k_sp2 = 0.5
+    height_sp1 = 1
+    height_sp2 = 0.5
+    k_species1 = np.ones(array_size) * k_sp1
+    k_species2 = np.ones(array_size) * k_sp2
+    height_species1 = np.ones(array_size) * height_sp1
+    height_species2 = np.ones(array_size) * height_sp2
+    wallace_sp1 = np.zeros(array_size)
+    wallace_sp2 = np.zeros(array_size)
+    for i in range(array_size):
+        wallace_sp1[i] = rad_intercpt_cycles(
             [
-                [K_SPECIES1[i], LAI_SPECIES1[i], HEIGHT_SPECIES1[i]],
-                [K_SPECIES2[i], LAI_SPECIES2[i], HEIGHT_SPECIES2[i]],
+                [k_species1[i], lai_species1[i], height_species1[i]],
+                [k_species2[i], lai_species2[i], height_species2[i]],
             ]
         )[0]
-        WALLACE_SP2[i] = rad_intercpt_cycles(
+        wallace_sp2[i] = rad_intercpt_cycles(
             [
-                [K_SPECIES1[i], LAI_SPECIES1[i], HEIGHT_SPECIES1[i]],
-                [K_SPECIES2[i], LAI_SPECIES2[i], HEIGHT_SPECIES2[i]],
+                [k_species1[i], lai_species1[i], height_species1[i]],
+                [k_species2[i], lai_species2[i], height_species2[i]],
             ]
         )[1]
     plt.plot(
-        LAI_TOTAL,
-        WALLACE_SP1,
+        lai_total,
+        wallace_sp1,
         label=r"sp 1 $k$=%.1f $L$%%=%.0f $h$=%.1f"
-        % (K_SP1, SP1_LAI_PERCENT * 100, HEIGHT_SP1),
+        % (k_sp1, sp1_lai_percent * 100, height_sp1),
         marker="o",
         color="k",
     )
     plt.plot(
-        LAI_TOTAL,
-        WALLACE_SP2,
+        lai_total,
+        wallace_sp2,
         label=r"sp 2 $k$=%.1f $L$%%=%.0f $h$=%.1f"
-        % (K_SP2, SP2_LAI_PERCENT * 100, HEIGHT_SP2),
+        % (k_sp2, sp2_lai_percent * 100, height_sp2),
         marker="o",
         color="k",
         markerfacecolor="white",
@@ -415,56 +413,56 @@ def gen_fig3():
     plt.xlim(0, 7)
     plt.ylim(0, 1.15)
     plt.legend(loc="upper left", prop={"size": 16}, frameon=False)
-    # Graph 3.2: lai:50/50, k:0.4/0.6, SP_HEIGHT:0.5/1
+    # Graph 3.2: lai:50/50, k:0.4/0.6, sp_height:0.5/1
     plt.subplot(3, 3, 2).tick_params(axis="both", which="major", labelsize=16)
-    SP1_LAI_PERCENT = 0.5
-    SP2_LAI_PERCENT = 0.5
-    MIN_LAI = 0.01
-    MAX_LAI = 7
-    LAI_SPECIES1 = np.linspace(
-        MIN_LAI * SP1_LAI_PERCENT, MAX_LAI * SP1_LAI_PERCENT, num=10
+    sp1_lai_percent = 0.5
+    sp2_lai_percent = 0.5
+    min_lai = 0.01
+    max_lai = 7
+    lai_species1 = np.linspace(
+        min_lai * sp1_lai_percent, max_lai * sp1_lai_percent, num=10
     )
-    LAI_SPECIES2 = np.linspace(
-        MIN_LAI * SP2_LAI_PERCENT, MAX_LAI * SP2_LAI_PERCENT, num=10
+    lai_species2 = np.linspace(
+        min_lai * sp2_lai_percent, max_lai * sp2_lai_percent, num=10
     )
-    LAI_TOTAL = LAI_SPECIES1 + LAI_SPECIES2
-    ARRAY_SIZE = len(LAI_SPECIES1)
-    K_SP1 = 0.4
-    K_SP2 = 0.6
-    HEIGHT_SP1 = 0.5
-    HEIGHT_SP2 = 1
-    K_SPECIES1 = np.ones(ARRAY_SIZE) * K_SP1
-    K_SPECIES2 = np.ones(ARRAY_SIZE) * K_SP2
-    HEIGHT_SPECIES1 = np.ones(ARRAY_SIZE) * HEIGHT_SP1
-    HEIGHT_SPECIES2 = np.ones(ARRAY_SIZE) * HEIGHT_SP2
-    WALLACE_SP1 = np.zeros(ARRAY_SIZE)
-    WALLACE_SP2 = np.zeros(ARRAY_SIZE)
-    for i in range(ARRAY_SIZE):
-        WALLACE_SP1[i] = rad_intercpt_cycles(
+    lai_total = lai_species1 + lai_species2
+    array_size = len(lai_species1)
+    k_sp1 = 0.4
+    k_sp2 = 0.6
+    height_sp1 = 0.5
+    height_sp2 = 1
+    k_species1 = np.ones(array_size) * k_sp1
+    k_species2 = np.ones(array_size) * k_sp2
+    height_species1 = np.ones(array_size) * height_sp1
+    height_species2 = np.ones(array_size) * height_sp2
+    wallace_sp1 = np.zeros(array_size)
+    wallace_sp2 = np.zeros(array_size)
+    for i in range(array_size):
+        wallace_sp1[i] = rad_intercpt_cycles(
             [
-                [K_SPECIES1[i], LAI_SPECIES1[i], HEIGHT_SPECIES1[i]],
-                [K_SPECIES2[i], LAI_SPECIES2[i], HEIGHT_SPECIES2[i]],
+                [k_species1[i], lai_species1[i], height_species1[i]],
+                [k_species2[i], lai_species2[i], height_species2[i]],
             ]
         )[0]
-        WALLACE_SP2[i] = rad_intercpt_cycles(
+        wallace_sp2[i] = rad_intercpt_cycles(
             [
-                [K_SPECIES1[i], LAI_SPECIES1[i], HEIGHT_SPECIES1[i]],
-                [K_SPECIES2[i], LAI_SPECIES2[i], HEIGHT_SPECIES2[i]],
+                [k_species1[i], lai_species1[i], height_species1[i]],
+                [k_species2[i], lai_species2[i], height_species2[i]],
             ]
         )[1]
     plt.plot(
-        LAI_TOTAL,
-        WALLACE_SP1,
+        lai_total,
+        wallace_sp1,
         label=r"sp 1 $k$=%.1f $L$%%=%.0f $h$=%.1f"
-        % (K_SP1, SP1_LAI_PERCENT * 100, HEIGHT_SP1),
+        % (k_sp1, sp1_lai_percent * 100, height_sp1),
         marker="o",
         color="k",
     )
     plt.plot(
-        LAI_TOTAL,
-        WALLACE_SP2,
+        lai_total,
+        wallace_sp2,
         label=r"sp 2 $k$=%.1f $L$%%=%.0f $h$=%.1f"
-        % (K_SP2, SP2_LAI_PERCENT * 100, HEIGHT_SP2),
+        % (k_sp2, sp2_lai_percent * 100, height_sp2),
         marker="o",
         color="k",
         markerfacecolor="white",
@@ -476,56 +474,56 @@ def gen_fig3():
     plt.ylim(0, 1.15)
     plt.legend(loc="upper left", prop={"size": 16}, frameon=False)
 
-    # Graph 3.3: lai:50/50, k:0.4/0.6, SP_HEIGHT:1/0.5
+    # Graph 3.3: lai:50/50, k:0.4/0.6, sp_height:1/0.5
     plt.subplot(3, 3, 3).tick_params(axis="both", which="major", labelsize=16)
-    SP1_LAI_PERCENT = 0.5
-    SP2_LAI_PERCENT = 0.5
-    MIN_LAI = 0.01
-    MAX_LAI = 7
-    LAI_SPECIES1 = np.linspace(
-        MIN_LAI * SP1_LAI_PERCENT, MAX_LAI * SP1_LAI_PERCENT, num=10
+    sp1_lai_percent = 0.5
+    sp2_lai_percent = 0.5
+    min_lai = 0.01
+    max_lai = 7
+    lai_species1 = np.linspace(
+        min_lai * sp1_lai_percent, max_lai * sp1_lai_percent, num=10
     )
-    LAI_SPECIES2 = np.linspace(
-        MIN_LAI * SP2_LAI_PERCENT, MAX_LAI * SP2_LAI_PERCENT, num=10
+    lai_species2 = np.linspace(
+        min_lai * sp2_lai_percent, max_lai * sp2_lai_percent, num=10
     )
-    LAI_TOTAL = LAI_SPECIES1 + LAI_SPECIES2
-    ARRAY_SIZE = len(LAI_SPECIES1)
-    K_SP1 = 0.4
-    K_SP2 = 0.6
-    HEIGHT_SP1 = 1
-    HEIGHT_SP2 = 0.5
-    K_SPECIES1 = np.ones(ARRAY_SIZE) * K_SP1
-    K_SPECIES2 = np.ones(ARRAY_SIZE) * K_SP2
-    HEIGHT_SPECIES1 = np.ones(ARRAY_SIZE) * HEIGHT_SP1
-    HEIGHT_SPECIES2 = np.ones(ARRAY_SIZE) * HEIGHT_SP2
-    WALLACE_SP1 = np.zeros(ARRAY_SIZE)
-    WALLACE_SP2 = np.zeros(ARRAY_SIZE)
-    for i in range(ARRAY_SIZE):
-        WALLACE_SP1[i] = rad_intercpt_cycles(
+    lai_total = lai_species1 + lai_species2
+    array_size = len(lai_species1)
+    k_sp1 = 0.4
+    k_sp2 = 0.6
+    height_sp1 = 1
+    height_sp2 = 0.5
+    k_species1 = np.ones(array_size) * k_sp1
+    k_species2 = np.ones(array_size) * k_sp2
+    height_species1 = np.ones(array_size) * height_sp1
+    height_species2 = np.ones(array_size) * height_sp2
+    wallace_sp1 = np.zeros(array_size)
+    wallace_sp2 = np.zeros(array_size)
+    for i in range(array_size):
+        wallace_sp1[i] = rad_intercpt_cycles(
             [
-                [K_SPECIES1[i], LAI_SPECIES1[i], HEIGHT_SPECIES1[i]],
-                [K_SPECIES2[i], LAI_SPECIES2[i], HEIGHT_SPECIES2[i]],
+                [k_species1[i], lai_species1[i], height_species1[i]],
+                [k_species2[i], lai_species2[i], height_species2[i]],
             ]
         )[0]
-        WALLACE_SP2[i] = rad_intercpt_cycles(
+        wallace_sp2[i] = rad_intercpt_cycles(
             [
-                [K_SPECIES1[i], LAI_SPECIES1[i], HEIGHT_SPECIES1[i]],
-                [K_SPECIES2[i], LAI_SPECIES2[i], HEIGHT_SPECIES2[i]],
+                [k_species1[i], lai_species1[i], height_species1[i]],
+                [k_species2[i], lai_species2[i], height_species2[i]],
             ]
         )[1]
     plt.plot(
-        LAI_TOTAL,
-        WALLACE_SP1,
+        lai_total,
+        wallace_sp1,
         label=r"sp 1 $k$=%.1f $L$%%=%.0f $h$=%.1f"
-        % (K_SP1, SP1_LAI_PERCENT * 100, HEIGHT_SP1),
+        % (k_sp1, sp1_lai_percent * 100, height_sp1),
         marker="o",
         color="k",
     )
     plt.plot(
-        LAI_TOTAL,
-        WALLACE_SP2,
+        lai_total,
+        wallace_sp2,
         label=r"sp 2 $k$=%.1f $L$%%=%.0f $h$=%.1f"
-        % (K_SP2, SP2_LAI_PERCENT * 100, HEIGHT_SP2),
+        % (k_sp2, sp2_lai_percent * 100, height_sp2),
         marker="o",
         color="k",
         markerfacecolor="white",
@@ -537,56 +535,56 @@ def gen_fig3():
     plt.ylim(0, 1.15)
     plt.legend(loc="upper left", prop={"size": 16}, frameon=False)
 
-    # Graph 3.4: lai:80/20, k:0.4/0.6, SP_HEIGHT:0.5/1
+    # Graph 3.4: lai:80/20, k:0.4/0.6, sp_height:0.5/1
     plt.subplot(3, 3, 4).tick_params(axis="both", which="major", labelsize=16)
-    SP1_LAI_PERCENT = 0.8
-    SP2_LAI_PERCENT = 0.2
-    MIN_LAI = 0.01
-    MAX_LAI = 7
-    LAI_SPECIES1 = np.linspace(
-        MIN_LAI * SP1_LAI_PERCENT, MAX_LAI * SP1_LAI_PERCENT, num=10
+    sp1_lai_percent = 0.8
+    sp2_lai_percent = 0.2
+    min_lai = 0.01
+    max_lai = 7
+    lai_species1 = np.linspace(
+        min_lai * sp1_lai_percent, max_lai * sp1_lai_percent, num=10
     )
-    LAI_SPECIES2 = np.linspace(
-        MIN_LAI * SP2_LAI_PERCENT, MAX_LAI * SP2_LAI_PERCENT, num=10
+    lai_species2 = np.linspace(
+        min_lai * sp2_lai_percent, max_lai * sp2_lai_percent, num=10
     )
-    LAI_TOTAL = LAI_SPECIES1 + LAI_SPECIES2
-    ARRAY_SIZE = len(LAI_SPECIES1)
-    K_SP1 = 0.4
-    K_SP2 = 0.6
-    HEIGHT_SP1 = 0.5
-    HEIGHT_SP2 = 1
-    K_SPECIES1 = np.ones(ARRAY_SIZE) * K_SP1
-    K_SPECIES2 = np.ones(ARRAY_SIZE) * K_SP2
-    HEIGHT_SPECIES1 = np.ones(ARRAY_SIZE) * HEIGHT_SP1
-    HEIGHT_SPECIES2 = np.ones(ARRAY_SIZE) * HEIGHT_SP2
-    WALLACE_SP1 = np.zeros(ARRAY_SIZE)
-    WALLACE_SP2 = np.zeros(ARRAY_SIZE)
-    for i in range(ARRAY_SIZE):
-        WALLACE_SP1[i] = rad_intercpt_cycles(
+    lai_total = lai_species1 + lai_species2
+    array_size = len(lai_species1)
+    k_sp1 = 0.4
+    k_sp2 = 0.6
+    height_sp1 = 0.5
+    height_sp2 = 1
+    k_species1 = np.ones(array_size) * k_sp1
+    k_species2 = np.ones(array_size) * k_sp2
+    height_species1 = np.ones(array_size) * height_sp1
+    height_species2 = np.ones(array_size) * height_sp2
+    wallace_sp1 = np.zeros(array_size)
+    wallace_sp2 = np.zeros(array_size)
+    for i in range(array_size):
+        wallace_sp1[i] = rad_intercpt_cycles(
             [
-                [K_SPECIES1[i], LAI_SPECIES1[i], HEIGHT_SPECIES1[i]],
-                [K_SPECIES2[i], LAI_SPECIES2[i], HEIGHT_SPECIES2[i]],
+                [k_species1[i], lai_species1[i], height_species1[i]],
+                [k_species2[i], lai_species2[i], height_species2[i]],
             ]
         )[0]
-        WALLACE_SP2[i] = rad_intercpt_cycles(
+        wallace_sp2[i] = rad_intercpt_cycles(
             [
-                [K_SPECIES1[i], LAI_SPECIES1[i], HEIGHT_SPECIES1[i]],
-                [K_SPECIES2[i], LAI_SPECIES2[i], HEIGHT_SPECIES2[i]],
+                [k_species1[i], lai_species1[i], height_species1[i]],
+                [k_species2[i], lai_species2[i], height_species2[i]],
             ]
         )[1]
     plt.plot(
-        LAI_TOTAL,
-        WALLACE_SP1,
+        lai_total,
+        wallace_sp1,
         label=r"sp 1 $k$=%.1f $L$%%=%.0f $h$=%.1f"
-        % (K_SP1, SP1_LAI_PERCENT * 100, HEIGHT_SP1),
+        % (k_sp1, sp1_lai_percent * 100, height_sp1),
         marker="o",
         color="k",
     )
     plt.plot(
-        LAI_TOTAL,
-        WALLACE_SP2,
+        lai_total,
+        wallace_sp2,
         label=r"sp 2 $k$=%.1f $L$%%=%.0f $h$=%.1f"
-        % (K_SP2, SP2_LAI_PERCENT * 100, HEIGHT_SP2),
+        % (k_sp2, sp2_lai_percent * 100, height_sp2),
         marker="o",
         color="k",
         markerfacecolor="white",
@@ -600,56 +598,56 @@ def gen_fig3():
     plt.ylim(0, 1.15)
     plt.legend(loc="upper left", prop={"size": 16}, frameon=False)
 
-    # Graph 3.5: lai:20/80, k:0.4/0.6, SP_HEIGHT:1/0.5
+    # Graph 3.5: lai:20/80, k:0.4/0.6, sp_height:1/0.5
     plt.subplot(3, 3, 5).tick_params(axis="both", which="major", labelsize=16)
-    SP1_LAI_PERCENT = 0.2
-    SP2_LAI_PERCENT = 0.8
-    MIN_LAI = 0.01
-    MAX_LAI = 7
-    LAI_SPECIES1 = np.linspace(
-        MIN_LAI * SP1_LAI_PERCENT, MAX_LAI * SP1_LAI_PERCENT, num=10
+    sp1_lai_percent = 0.2
+    sp2_lai_percent = 0.8
+    min_lai = 0.01
+    max_lai = 7
+    lai_species1 = np.linspace(
+        min_lai * sp1_lai_percent, max_lai * sp1_lai_percent, num=10
     )
-    LAI_SPECIES2 = np.linspace(
-        MIN_LAI * SP2_LAI_PERCENT, MAX_LAI * SP2_LAI_PERCENT, num=10
+    lai_species2 = np.linspace(
+        min_lai * sp2_lai_percent, max_lai * sp2_lai_percent, num=10
     )
-    LAI_TOTAL = LAI_SPECIES1 + LAI_SPECIES2
-    ARRAY_SIZE = len(LAI_SPECIES1)
-    K_SP1 = 0.4
-    K_SP2 = 0.6
-    HEIGHT_SP1 = 1
-    HEIGHT_SP2 = 0.5
-    K_SPECIES1 = np.ones(ARRAY_SIZE) * K_SP1
-    K_SPECIES2 = np.ones(ARRAY_SIZE) * K_SP2
-    HEIGHT_SPECIES1 = np.ones(ARRAY_SIZE) * HEIGHT_SP1
-    HEIGHT_SPECIES2 = np.ones(ARRAY_SIZE) * HEIGHT_SP2
-    WALLACE_SP1 = np.zeros(ARRAY_SIZE)
-    WALLACE_SP2 = np.zeros(ARRAY_SIZE)
-    for i in range(ARRAY_SIZE):
-        WALLACE_SP1[i] = rad_intercpt_cycles(
+    lai_total = lai_species1 + lai_species2
+    array_size = len(lai_species1)
+    k_sp1 = 0.4
+    k_sp2 = 0.6
+    height_sp1 = 1
+    height_sp2 = 0.5
+    k_species1 = np.ones(array_size) * k_sp1
+    k_species2 = np.ones(array_size) * k_sp2
+    height_species1 = np.ones(array_size) * height_sp1
+    height_species2 = np.ones(array_size) * height_sp2
+    wallace_sp1 = np.zeros(array_size)
+    wallace_sp2 = np.zeros(array_size)
+    for i in range(array_size):
+        wallace_sp1[i] = rad_intercpt_cycles(
             [
-                [K_SPECIES1[i], LAI_SPECIES1[i], HEIGHT_SPECIES1[i]],
-                [K_SPECIES2[i], LAI_SPECIES2[i], HEIGHT_SPECIES2[i]],
+                [k_species1[i], lai_species1[i], height_species1[i]],
+                [k_species2[i], lai_species2[i], height_species2[i]],
             ]
         )[0]
-        WALLACE_SP2[i] = rad_intercpt_cycles(
+        wallace_sp2[i] = rad_intercpt_cycles(
             [
-                [K_SPECIES1[i], LAI_SPECIES1[i], HEIGHT_SPECIES1[i]],
-                [K_SPECIES2[i], LAI_SPECIES2[i], HEIGHT_SPECIES2[i]],
+                [k_species1[i], lai_species1[i], height_species1[i]],
+                [k_species2[i], lai_species2[i], height_species2[i]],
             ]
         )[1]
     plt.plot(
-        LAI_TOTAL,
-        WALLACE_SP1,
+        lai_total,
+        wallace_sp1,
         label=r"sp 1 $k$=%.1f $L$%%=%.0f $h$=%.1f"
-        % (K_SP1, SP1_LAI_PERCENT * 100, HEIGHT_SP1),
+        % (k_sp1, sp1_lai_percent * 100, height_sp1),
         marker="o",
         color="k",
     )
     plt.plot(
-        LAI_TOTAL,
-        WALLACE_SP2,
+        lai_total,
+        wallace_sp2,
         label=r"sp 2 $k$=%.1f $L$%%=%.0f $h$=%.1f"
-        % (K_SP2, SP2_LAI_PERCENT * 100, HEIGHT_SP2),
+        % (k_sp2, sp2_lai_percent * 100, height_sp2),
         marker="o",
         color="k",
         markerfacecolor="white",
@@ -661,56 +659,57 @@ def gen_fig3():
     plt.xlim(0, 7)
     plt.ylim(0, 1.15)
     plt.legend(loc="upper left", prop={"size": 16}, frameon=False)
-    # Graph 2.6: lai:20/80, k:0.4/0.6, SP_HEIGHT:0.5/1
+
+    # Graph 3.6: lai:20/80, k:0.4/0.6, sp_height:0.5/1
     plt.subplot(3, 3, 6).tick_params(axis="both", which="major", labelsize=16)
-    SP1_LAI_PERCENT = 0.2
-    SP2_LAI_PERCENT = 0.8
-    MIN_LAI = 0.01
-    MAX_LAI = 7
-    LAI_SPECIES1 = np.linspace(
-        MIN_LAI * SP1_LAI_PERCENT, MAX_LAI * SP1_LAI_PERCENT, num=10
+    sp1_lai_percent = 0.2
+    sp2_lai_percent = 0.8
+    min_lai = 0.01
+    max_lai = 7
+    lai_species1 = np.linspace(
+        min_lai * sp1_lai_percent, max_lai * sp1_lai_percent, num=10
     )
-    LAI_SPECIES2 = np.linspace(
-        MIN_LAI * SP2_LAI_PERCENT, MAX_LAI * SP2_LAI_PERCENT, num=10
+    lai_species2 = np.linspace(
+        min_lai * sp2_lai_percent, max_lai * sp2_lai_percent, num=10
     )
-    LAI_TOTAL = LAI_SPECIES1 + LAI_SPECIES2
-    ARRAY_SIZE = len(LAI_SPECIES1)
-    K_SP1 = 0.4
-    K_SP2 = 0.6
-    HEIGHT_SP1 = 0.5
-    HEIGHT_SP2 = 1
-    K_SPECIES1 = np.ones(ARRAY_SIZE) * K_SP1
-    K_SPECIES2 = np.ones(ARRAY_SIZE) * K_SP2
-    HEIGHT_SPECIES1 = np.ones(ARRAY_SIZE) * HEIGHT_SP1
-    HEIGHT_SPECIES2 = np.ones(ARRAY_SIZE) * HEIGHT_SP2
-    WALLACE_SP1 = np.zeros(ARRAY_SIZE)
-    WALLACE_SP2 = np.zeros(ARRAY_SIZE)
-    for i in range(ARRAY_SIZE):
-        WALLACE_SP1[i] = rad_intercpt_cycles(
+    lai_total = lai_species1 + lai_species2
+    array_size = len(lai_species1)
+    k_sp1 = 0.4
+    k_sp2 = 0.6
+    height_sp1 = 0.5
+    height_sp2 = 1
+    k_species1 = np.ones(array_size) * k_sp1
+    k_species2 = np.ones(array_size) * k_sp2
+    height_species1 = np.ones(array_size) * height_sp1
+    height_species2 = np.ones(array_size) * height_sp2
+    wallace_sp1 = np.zeros(array_size)
+    wallace_sp2 = np.zeros(array_size)
+    for i in range(array_size):
+        wallace_sp1[i] = rad_intercpt_cycles(
             [
-                [K_SPECIES1[i], LAI_SPECIES1[i], HEIGHT_SPECIES1[i]],
-                [K_SPECIES2[i], LAI_SPECIES2[i], HEIGHT_SPECIES2[i]],
+                [k_species1[i], lai_species1[i], height_species1[i]],
+                [k_species2[i], lai_species2[i], height_species2[i]],
             ]
         )[0]
-        WALLACE_SP2[i] = rad_intercpt_cycles(
+        wallace_sp2[i] = rad_intercpt_cycles(
             [
-                [K_SPECIES1[i], LAI_SPECIES1[i], HEIGHT_SPECIES1[i]],
-                [K_SPECIES2[i], LAI_SPECIES2[i], HEIGHT_SPECIES2[i]],
+                [k_species1[i], lai_species1[i], height_species1[i]],
+                [k_species2[i], lai_species2[i], height_species2[i]],
             ]
         )[1]
     plt.plot(
-        LAI_TOTAL,
-        WALLACE_SP1,
+        lai_total,
+        wallace_sp1,
         label=r"sp 1 $k$=%.1f $L$%%=%.0f $h$=%.1f"
-        % (K_SP1, SP1_LAI_PERCENT * 100, HEIGHT_SP1),
+        % (k_sp1, sp1_lai_percent * 100, height_sp1),
         marker="o",
         color="k",
     )
     plt.plot(
-        LAI_TOTAL,
-        WALLACE_SP2,
+        lai_total,
+        wallace_sp2,
         label=r"sp 2 $k$=%.1f $L$%%=%.0f $h$=%.1f"
-        % (K_SP2, SP2_LAI_PERCENT * 100, HEIGHT_SP2),
+        % (k_sp2, sp2_lai_percent * 100, height_sp2),
         marker="o",
         color="k",
         markerfacecolor="white",
@@ -722,6 +721,7 @@ def gen_fig3():
     plt.xlim(0, 7)
     plt.ylim(0, 1.15)
     plt.legend(loc="upper left", prop={"size": 16}, frameon=False)
+
     # Axis removal controls
     plt.setp(plt.subplot(3, 3, 1).get_xticklabels(), visible=False)
     plt.setp(plt.subplot(3, 3, 2).get_yticklabels(), visible=False)
@@ -739,86 +739,86 @@ def gen_fig4():
     # Figure 4 Cycles and Wallace comparison
     plt.figure(3)
     plt.subplot(1, 1, 1).tick_params(axis="both", which="major", labelsize=16)
-    SP1_LAI_PERCENT = 0.5
-    SP2_LAI_PERCENT = 0.5
-    MIN_LAI = 0.01
-    MAX_LAI = 7
-    LAI_SPECIES1 = np.linspace(
-        MIN_LAI * SP1_LAI_PERCENT, MAX_LAI * SP1_LAI_PERCENT, num=10
+    sp1_lai_percent = 0.5
+    sp2_lai_percent = 0.5
+    min_lai = 0.01
+    max_lai = 7
+    lai_species1 = np.linspace(
+        min_lai * sp1_lai_percent, max_lai * sp1_lai_percent, num=10
     )
-    LAI_SPECIES2 = np.linspace(
-        MIN_LAI * SP2_LAI_PERCENT, MAX_LAI * SP2_LAI_PERCENT, num=10
+    lai_species2 = np.linspace(
+        min_lai * sp2_lai_percent, max_lai * sp2_lai_percent, num=10
     )
-    LAI_TOTAL = LAI_SPECIES1 + LAI_SPECIES2
-    ARRAY_SIZE = len(LAI_SPECIES1)
-    K_SP1 = 0.4
-    K_SP2 = 0.6
-    HEIGHT_SP1 = 0.5
-    HEIGHT_SP2 = 1
-    K_SPECIES1 = np.ones(ARRAY_SIZE) * K_SP1
-    K_SPECIES2 = np.ones(ARRAY_SIZE) * K_SP2
-    HEIGHT_SPECIES1 = np.ones(ARRAY_SIZE) * HEIGHT_SP1
-    HEIGHT_SPECIES2 = np.ones(ARRAY_SIZE) * HEIGHT_SP2
-    WALLACE_SP1 = np.zeros(ARRAY_SIZE)
-    WALLACE_SP2 = np.zeros(ARRAY_SIZE)
-    CYCLES_SP1 = np.zeros(ARRAY_SIZE)
-    CYCLES_SP2 = np.zeros(ARRAY_SIZE)
-    for i in range(ARRAY_SIZE):
-        WALLACE_SP1[i] = rad_intercpt_wallace(
+    lai_total = lai_species1 + lai_species2
+    array_size = len(lai_species1)
+    k_sp1 = 0.4
+    k_sp2 = 0.6
+    height_sp1 = 0.5
+    height_sp2 = 1
+    k_species1 = np.ones(array_size) * k_sp1
+    k_species2 = np.ones(array_size) * k_sp2
+    height_species1 = np.ones(array_size) * height_sp1
+    height_species2 = np.ones(array_size) * height_sp2
+    wallace_sp1 = np.zeros(array_size)
+    wallace_sp2 = np.zeros(array_size)
+    CYCLES_SP1 = np.zeros(array_size)
+    CYCLES_SP2 = np.zeros(array_size)
+    for i in range(array_size):
+        wallace_sp1[i] = rad_intercpt_wallace(
             [
-                [K_SPECIES1[i], LAI_SPECIES1[i], HEIGHT_SPECIES1[i]],
-                [K_SPECIES2[i], LAI_SPECIES2[i], HEIGHT_SPECIES2[i]],
+                [k_species1[i], lai_species1[i], height_species1[i]],
+                [k_species2[i], lai_species2[i], height_species2[i]],
             ]
         )[0]
         CYCLES_SP1[i] = rad_intercpt_cycles(
             [
-                [K_SPECIES1[i], LAI_SPECIES1[i], HEIGHT_SPECIES1[i]],
-                [K_SPECIES2[i], LAI_SPECIES2[i], HEIGHT_SPECIES2[i]],
+                [k_species1[i], lai_species1[i], height_species1[i]],
+                [k_species2[i], lai_species2[i], height_species2[i]],
             ]
         )[0]
-        WALLACE_SP2[i] = rad_intercpt_wallace(
+        wallace_sp2[i] = rad_intercpt_wallace(
             [
-                [K_SPECIES1[i], LAI_SPECIES1[i], HEIGHT_SPECIES1[i]],
-                [K_SPECIES2[i], LAI_SPECIES2[i], HEIGHT_SPECIES2[i]],
+                [k_species1[i], lai_species1[i], height_species1[i]],
+                [k_species2[i], lai_species2[i], height_species2[i]],
             ]
         )[1]
         CYCLES_SP2[i] = rad_intercpt_cycles(
             [
-                [K_SPECIES1[i], LAI_SPECIES1[i], HEIGHT_SPECIES1[i]],
-                [K_SPECIES2[i], LAI_SPECIES2[i], HEIGHT_SPECIES2[i]],
+                [k_species1[i], lai_species1[i], height_species1[i]],
+                [k_species2[i], lai_species2[i], height_species2[i]],
             ]
         )[1]
     plt.plot(
-        LAI_TOTAL,
-        WALLACE_SP1,
-        label=r"Wallace SP1 $k$=%.1f $L$%%=%.0f $h$=%.1f"
-        % (K_SP1, SP1_LAI_PERCENT * 100, HEIGHT_SP1),
+        lai_total,
+        wallace_sp1,
+        label=r"Wallace sp1 $k$=%.1f $L$%%=%.0f $h$=%.1f"
+        % (k_sp1, sp1_lai_percent * 100, height_sp1),
         marker="o",
         color="k",
         markerfacecolor="white",
     )
     plt.plot(
-        LAI_TOTAL,
+        lai_total,
         CYCLES_SP1,
-        label=r"Cycles SP1 $k$=%.1f $L$%%=%.0f $h$=%.1f"
-        % (K_SP1, SP1_LAI_PERCENT * 100, HEIGHT_SP1),
+        label=r"Cycles sp1 $k$=%.1f $L$%%=%.0f $h$=%.1f"
+        % (k_sp1, sp1_lai_percent * 100, height_sp1),
         marker="o",
         color="k",
     )
     plt.plot(
-        LAI_TOTAL,
-        WALLACE_SP2,
-        label=r"Wallace SP2 $k$=%.1f $L$%%=%.0f $h$=%.1f"
-        % (K_SP2, SP2_LAI_PERCENT * 100, HEIGHT_SP2),
+        lai_total,
+        wallace_sp2,
+        label=r"Wallace sp2 $k$=%.1f $L$%%=%.0f $h$=%.1f"
+        % (k_sp2, sp2_lai_percent * 100, height_sp2),
         marker="v",
         color="k",
         markerfacecolor="white",
     )
     plt.plot(
-        LAI_TOTAL,
+        lai_total,
         CYCLES_SP2,
-        label=r"Cycles SP2 $k$=%.1f $L$%%=%.0f $h$=%.1f"
-        % (K_SP2, SP2_LAI_PERCENT * 100, HEIGHT_SP2),
+        label=r"Cycles sp2 $k$=%.1f $L$%%=%.0f $h$=%.1f"
+        % (k_sp2, sp2_lai_percent * 100, height_sp2),
         marker="v",
         color="k",
     )
@@ -833,111 +833,111 @@ def gen_fig4():
 def gen_fig5():
     # Figure 5 Cycles and APSIM comparison
     fig4 = plt.figure(4)
-    SP1_LAI_PERCENT = 0.33
-    SP2_LAI_PERCENT = 0.33
+    sp1_lai_percent = 0.33
+    sp2_lai_percent = 0.33
     SP3_LAI_PERCENT = 0.33
-    K_SP1 = 0.6
-    K_SP2 = 0.6
+    k_sp1 = 0.6
+    k_sp2 = 0.6
     K_SP3 = 0.6
-    HEIGHT_SP1 = 1
-    HEIGHT_SP2 = 2
+    height_sp1 = 1
+    height_sp2 = 2
     HEIGHT_SP3 = 4
-    MIN_LAI = 0.01
-    MAX_LAI = 7
-    LAI_SPECIES1 = np.linspace(
-        MIN_LAI * SP1_LAI_PERCENT, MAX_LAI * SP1_LAI_PERCENT, num=10
+    min_lai = 0.01
+    max_lai = 7
+    lai_species1 = np.linspace(
+        min_lai * sp1_lai_percent, max_lai * sp1_lai_percent, num=10
     )
-    LAI_SPECIES2 = np.linspace(
-        MIN_LAI * SP2_LAI_PERCENT, MAX_LAI * SP2_LAI_PERCENT, num=10
+    lai_species2 = np.linspace(
+        min_lai * sp2_lai_percent, max_lai * sp2_lai_percent, num=10
     )
     LAI_SPECIES3 = np.linspace(
-        MIN_LAI * SP3_LAI_PERCENT, MAX_LAI * SP2_LAI_PERCENT, num=10
+        min_lai * SP3_LAI_PERCENT, max_lai * sp2_lai_percent, num=10
     )
-    LAI_TOTAL = LAI_SPECIES1 + LAI_SPECIES2 + LAI_SPECIES3
-    ARRAY_SIZE = len(LAI_SPECIES1)
-    K_SPECIES1 = np.ones(ARRAY_SIZE) * K_SP1
-    K_SPECIES2 = np.ones(ARRAY_SIZE) * K_SP2
-    K_SPECIES3 = np.ones(ARRAY_SIZE) * K_SP3
-    HEIGHT_SPECIES1 = np.ones(ARRAY_SIZE) * HEIGHT_SP1
-    HEIGHT_SPECIES2 = np.ones(ARRAY_SIZE) * HEIGHT_SP2
-    H_SPECIES3 = np.ones(ARRAY_SIZE) * HEIGHT_SP3
-    APSIM_SP1 = np.zeros(ARRAY_SIZE)
-    APSIM_SP2 = np.zeros(ARRAY_SIZE)
-    APSIM_SP3 = np.zeros(ARRAY_SIZE)
-    CYCLES_SP1 = np.zeros(ARRAY_SIZE)
-    CYCLES_SP2 = np.zeros(ARRAY_SIZE)
-    CYCLES_SP3 = np.zeros(ARRAY_SIZE)
-    for i in range(ARRAY_SIZE):
-        APSIM_SP1[i] = rad_intercpt_apsim(
+    lai_total = lai_species1 + lai_species2 + LAI_SPECIES3
+    array_size = len(lai_species1)
+    k_species1 = np.ones(array_size) * k_sp1
+    k_species2 = np.ones(array_size) * k_sp2
+    K_SPECIES3 = np.ones(array_size) * K_SP3
+    height_species1 = np.ones(array_size) * height_sp1
+    height_species2 = np.ones(array_size) * height_sp2
+    H_SPECIES3 = np.ones(array_size) * HEIGHT_SP3
+    apsim_sp1 = np.zeros(array_size)
+    apsim_sp2 = np.zeros(array_size)
+    APSIM_SP3 = np.zeros(array_size)
+    CYCLES_SP1 = np.zeros(array_size)
+    CYCLES_SP2 = np.zeros(array_size)
+    CYCLES_SP3 = np.zeros(array_size)
+    for i in range(array_size):
+        apsim_sp1[i] = rad_intercpt_apsim(
             [
-                [K_SPECIES1[i], LAI_SPECIES1[i]],
-                [K_SPECIES2[i], LAI_SPECIES2[i]],
+                [k_species1[i], lai_species1[i]],
+                [k_species2[i], lai_species2[i]],
                 [K_SPECIES3[i], LAI_SPECIES3[i]],
             ]
         )[0]
-        APSIM_SP2[i] = rad_intercpt_apsim(
+        apsim_sp2[i] = rad_intercpt_apsim(
             [
-                [K_SPECIES1[i], LAI_SPECIES1[i]],
-                [K_SPECIES2[i], LAI_SPECIES2[i]],
+                [k_species1[i], lai_species1[i]],
+                [k_species2[i], lai_species2[i]],
                 [K_SPECIES3[i], LAI_SPECIES3[i]],
             ]
         )[1]
         APSIM_SP3[i] = rad_intercpt_apsim(
             [
-                [K_SPECIES1[i], LAI_SPECIES1[i]],
-                [K_SPECIES2[i], LAI_SPECIES2[i]],
+                [k_species1[i], lai_species1[i]],
+                [k_species2[i], lai_species2[i]],
                 [K_SPECIES3[i], LAI_SPECIES3[i]],
             ]
         )[2]
         CYCLES_SP1[i] = rad_intercpt_cycles(
             [
-                [K_SPECIES1[i], LAI_SPECIES1[i], HEIGHT_SPECIES1[i]],
-                [K_SPECIES2[i], LAI_SPECIES2[i], HEIGHT_SPECIES2[i]],
+                [k_species1[i], lai_species1[i], height_species1[i]],
+                [k_species2[i], lai_species2[i], height_species2[i]],
                 [K_SPECIES3[i], LAI_SPECIES3[i], H_SPECIES3[i]],
             ]
         )[0]
         CYCLES_SP2[i] = rad_intercpt_cycles(
             [
-                [K_SPECIES1[i], LAI_SPECIES1[i], HEIGHT_SPECIES1[i]],
-                [K_SPECIES2[i], LAI_SPECIES2[i], HEIGHT_SPECIES2[i]],
+                [k_species1[i], lai_species1[i], height_species1[i]],
+                [k_species2[i], lai_species2[i], height_species2[i]],
                 [K_SPECIES3[i], LAI_SPECIES3[i], H_SPECIES3[i]],
             ]
         )[1]
         CYCLES_SP3[i] = rad_intercpt_cycles(
             [
-                [K_SPECIES1[i], LAI_SPECIES1[i], HEIGHT_SPECIES1[i]],
-                [K_SPECIES2[i], LAI_SPECIES2[i], HEIGHT_SPECIES2[i]],
+                [k_species1[i], lai_species1[i], height_species1[i]],
+                [k_species2[i], lai_species2[i], height_species2[i]],
                 [K_SPECIES3[i], LAI_SPECIES3[i], H_SPECIES3[i]],
             ]
         )[2]
     axes1 = fig4.add_axes([0.1, 0.1, 0.8, 0.8])
     axes2 = fig4.add_axes([0.55, 0.55, 0.3, 0.3])
     axes1.plot(
-        LAI_TOTAL,
-        APSIM_SP1,
+        lai_total,
+        apsim_sp1,
         label="APSIM (3 species)",
         marker="^",
         color="k",
         markerfacecolor="white",
     )
     axes1.plot(
-        LAI_TOTAL,
+        lai_total,
         CYCLES_SP1,
-        label=r"Cycles sp 1 $h$=%.0f" % (HEIGHT_SP1),
+        label=r"Cycles sp 1 $h$=%.0f" % (height_sp1),
         marker="o",
         color="k",
         markerfacecolor="white",
     )
     axes1.plot(
-        LAI_TOTAL,
+        lai_total,
         CYCLES_SP2,
-        label=r"Cycles sp 2 $h$=%.0f" % (HEIGHT_SP2),
+        label=r"Cycles sp 2 $h$=%.0f" % (height_sp2),
         marker="o",
         color="k",
         markerfacecolor="gray",
     )
     axes1.plot(
-        LAI_TOTAL,
+        lai_total,
         CYCLES_SP3,
         label=r"Cycles sp 3 $h$=%.0f" % (HEIGHT_SP3),
         marker="o",
@@ -954,32 +954,32 @@ def gen_fig5():
     axes1.yaxis.set_tick_params(labelsize=16)
     # Figure 4 Error between Cycles and APSIM comparison
     axes2.plot(
-        LAI_TOTAL,
-        APSIM_SP1 - APSIM_SP1,
+        lai_total,
+        apsim_sp1 - apsim_sp1,
         label=r"APSIM (3 species)",
         marker="^",
         color="k",
         markerfacecolor="white",
     )
     axes2.plot(
-        LAI_TOTAL,
-        CYCLES_SP1 - APSIM_SP1,
-        label=r"Cycles sp 1 $h$=%.0f" % (HEIGHT_SP1),
+        lai_total,
+        CYCLES_SP1 - apsim_sp1,
+        label=r"Cycles sp 1 $h$=%.0f" % (height_sp1),
         marker="o",
         color="k",
         markerfacecolor="white",
     )
     axes2.plot(
-        LAI_TOTAL,
-        CYCLES_SP2 - APSIM_SP1,
-        label=r"Cycles sp 2 $h$=%.0f" % (HEIGHT_SP2),
+        lai_total,
+        CYCLES_SP2 - apsim_sp1,
+        label=r"Cycles sp 2 $h$=%.0f" % (height_sp2),
         marker="o",
         color="k",
         markerfacecolor="gray",
     )
     axes2.plot(
-        LAI_TOTAL,
-        CYCLES_SP3 - APSIM_SP1,
+        lai_total,
+        CYCLES_SP3 - apsim_sp1,
         label=r"Cycles sp 3 $h$=%.0f" % (HEIGHT_SP3),
         marker="o",
         color="k",

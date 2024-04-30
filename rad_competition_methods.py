@@ -1,4 +1,4 @@
-"""Radiation interception methods."""
+"""Solar radiation interception methods."""
 import math
 
 import numpy as np
@@ -9,16 +9,17 @@ from environ_biophysics import get_height_weight_factor
 def rad_intercpt_cycles(
     crop_list: tuple[list[float | int], list[float | int], list[float]]
 ) -> np.array:
-    """Returns radiation intercepted on each species.
+    """Returns solar radiation intercepted on each species.
 
     Args:
-        crop_list: list of species characteristics
-        extinction_coeff: rad extinction coefficient
-        leaf_area_index: leaf area index [m2/m2]
-        height: plant height [height_dom]
+        crop_list: list of species characteristics with three items:
+            radiation extinction coeffcoefficient
+            leaf area index [m2/m2]
+            plant height [m]
 
     References:
-         Camargo, G.G.T. 2015. Ph.D. Dissertation. Penn State University
+         Camargo, G.G.T. 2015. Ph.D. Dissertation. Penn State University.
+          https://etda.libraries.psu.edu/files/final_submissions/10226
 
     Examples:
         >>> rad_intercpt_cycles(([0.5,1,1],[0.5,1,2],[0.5,1,1]))
@@ -44,24 +45,31 @@ def rad_intercpt_cycles(
     k_lai_prod = np.zeros(number_species)
     k_lai_prod_adj = np.zeros(number_species)
     total_transm = 1
+
     # Read and store inputs
     for i in range(number_species):
         extinction_coeff[i] = crop_list[i][0]
         leaf_area_index[i] = crop_list[i][1]
         height[i] = crop_list[i][2]
+
         # Transmitted radiation if all species had same height
         transm_rad[i] = math.exp(-extinction_coeff[i] * leaf_area_index[i])
+
         # Intercepted radiation if species was dominant
         rad_intercpt_dom[i] = 1 - transm_rad[i]
         k_lai_prod[i] = extinction_coeff[i] * leaf_area_index[i]
+
     # Calculate total transmitance, interception and height dominance
     for i in range(number_species):
         # Total transmitance if all species had the same height
         total_transm *= transm_rad[i]
+
         # Height dominance factor
         height_dom[i] = number_species * height[i] / height.sum()
+
     # Total radiation interception if species had the same height
     total_interception = 1 - total_transm
+
     # All species but ith species rad transmission
     for i in range(number_species):
         all_species = list(range(number_species))  # list with all species
@@ -70,6 +78,7 @@ def rad_intercpt_cycles(
         total_transm_but_ith_sp = 1  # sum of non-dominant species transmission
         for j in all_species_but_ith:
             total_transm_but_ith_sp *= transm_rad[j]
+
         # Total transmitted radiation from all species but ith
         transm_rad_others[i] = total_transm_but_ith_sp
 
@@ -92,6 +101,7 @@ def rad_intercpt_cycles(
             * k_lai_prod.sum()
             / k_lai_prod[i]
         )
+
         # Based on species height determine a height weight factor in between
         # dominant_fact and suppressed_fact values usin linear interpolation
         hght_wght_fct[i] = get_height_weight_factor(
@@ -99,11 +109,13 @@ def rad_intercpt_cycles(
         )
         # Adjust extinction coefficient and leaf area index product
         k_lai_prod_adj[i] = extinction_coeff[i] * leaf_area_index[i] * hght_wght_fct[i]
+
     for i in range(number_species):
         # Adjust height weighting factor
         hght_wght_fct_adj[i] = (
             hght_wght_fct[i] / k_lai_prod_adj.sum() * k_lai_prod.sum()
         )
+
         # Radiation interception for each species
         rad_intercpt[i] = (
             total_interception * hght_wght_fct_adj[i] * k_lai_prod[i] / k_lai_prod.sum()
@@ -118,12 +130,13 @@ def rad_intercpt_wallace(
 
     Args:
         crop_list: list of species characteristics:
-        extinction_coeff: rad extinction coefficient
-        leaf_area_index: leaf area index [m2/m2]
-        height: plant height [m]
+            extinction_coeff: rad extinction coefficient
+            leaf_area_index: leaf area index [m2/m2]
+            height: plant height [m]
 
     References:
-        Wallace, J.S., 1997. Evaporation and radiation interception by neighbouring plants. Quarterly Journal of the Royal Meteorological Society 123, 1885-1905.
+        Wallace, J.S., 1997. Evaporation and radiation interception by neighbouring plants. Quarterly Journal of the
+         Royal Meteorological Society 123, 1885-1905.
 
     Examples:
         >>> rad_intercpt_wallace(([0.5, 1, 1], [0.7, 3, 1]))
@@ -188,8 +201,6 @@ def rad_intercpt_apsim(
     transm_rad_temp = np.zeros(number_species)
     rad_intercpt_temp = np.zeros(number_species)
     ext_coeff_leaf_area_index_prod = np.zeros(number_species)
-    leaf_area_index = 0.0  # Leaf area index
-    extinction_coeff = 0.0  # Extinction coeff. for solar radiation init
     cum_transm_rad = 1.0  # Cumulative fractional transmission
     rad_intercpt_list = np.zeros(number_species)
 
@@ -202,6 +213,7 @@ def rad_intercpt_apsim(
         cum_transm_rad = cum_transm_rad * transm_rad_temp[i]
         rad_intercpt_temp[i] = 1 - transm_rad_temp[i]
     tot_rad_intercpt = 1 - cum_transm_rad
+
     # Actual rad interception of each crop weighted by k and LAI
     for i in range(number_species):
         if rad_intercpt_temp[i] > 0:
