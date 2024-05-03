@@ -76,7 +76,8 @@ select = [
     "PERF",
     "FURB",
     "LOG",
-    "RUF"
+    "RUF",
+    "D"
 ]
 ignore = ["ANN202",
     "S101",

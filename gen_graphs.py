@@ -1,4 +1,4 @@
-"""Graphs for Light interception publication"""
+"""Graphs for Light interception publication."""
 import math
 
 import matplotlib.pyplot as plt
@@ -13,7 +13,7 @@ from rad_competition_methods import (
 
 
 def gen_fig1() -> None:
-    # Figure 1
+    """Figure 1."""
     plt.figure(0, figsize=[8, 8])
     plt.subplot(1, 1, 1).tick_params(axis="both", which="major", labelsize=12)
     atm_transm = 0.75
@@ -104,7 +104,7 @@ def gen_fig1() -> None:
 
 
 def gen_fig2() -> None:
-    # Figure 2
+    """Figure 2."""
     plt.figure(1, figsize=(8, 28))
 
     # Graph 2.1 : 50 / 50 lai; k1 = 0.4, k2 = 0.6
@@ -352,6 +352,7 @@ def gen_fig2() -> None:
 
 
 def gen_fig3() -> None:
+    """Figure 3."""
     # Figure 3 Wallace with different heights
     plt.figure(2, figsize=(16, 12))
     # Graph 3.1: lai:50/50, k:0.5/0.5, sp_height:1/0.5
@@ -738,6 +739,7 @@ def gen_fig3() -> None:
 
 
 def gen_fig4() -> None:
+    """Figure 4."""
     # Figure 4 Cycles and Wallace comparison
     plt.figure(3)
     plt.subplot(1, 1, 1).tick_params(axis="both", which="major", labelsize=16)
@@ -833,6 +835,7 @@ def gen_fig4() -> None:
 
 
 def gen_fig5() -> None:
+    """Figure 5."""
     # Figure 5 Cycles and APSIM comparison
     fig4 = plt.figure(4)
     sp1_lai_percent = 0.33
@@ -994,6 +997,7 @@ def gen_fig5() -> None:
 
 
 def get_fig6() -> None:
+    """Figure 6."""
     # Barilot vs Cycles
     fig5 = plt.figure(5, figsize=(7, 9))
     axes1 = fig5.add_axes([0.1, 0.1, 0.8, 0.8])

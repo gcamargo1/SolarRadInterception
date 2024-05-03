@@ -7,7 +7,9 @@ import numpy as np
 def get_height_weight_factor(
     height_dom: float, dominant_fact: float, suppressed_fact: float, number_species: int
 ) -> float:
-    """Height dominance weighing factor calculated as a linear interpolation
+    """Height domimance weight factor.
+
+    Height dominance weighing factor calculated as a linear interpolation
     between dominant and suppressed species for radiation interception between
     species.
 
@@ -41,7 +43,9 @@ def get_height_weight_factor(
 
 
 def get_optical_air_mass(atm_press: float, solar_zenith_angle: float) -> float:
-    """Return optical air mass, or the ratio of slant path length through the
+    """Optical air mass.
+
+    Return optical air mass, or the ratio of slant path length through the
      atmosphere to zenith path length.
 
     Args:
@@ -69,8 +73,10 @@ def get_optical_air_mass(atm_press: float, solar_zenith_angle: float) -> float:
 def get_solar_radiation_extinction_coeff_black_beam(
     solar_zenith_angle: float, x_area_ratio: float
 ) -> float:
-    """Return solar radiation extinction coefficient of a canopy of black leaves
-     with an ellipsoidal leaf area distribution for beam radiation
+    """Solar radiation extinction coefficient of a canopy of black leaves.
+
+    Return solar radiation extinction coefficient of a canopy of black leaves
+     with an ellipsoidal leaf area distribution for beam radiation.
 
     Args:
         solar_zenith_angle: rad
@@ -97,13 +103,15 @@ def get_solar_radiation_extinction_coeff_black_beam(
 def get_solar_radiation_extinction_coeff_black_diff(
     x_area_ratio: float, leaf_area_index: float
 ) -> float:
-    """Return solar radiation extinction coefficient of a canopy of black leaves for
-    diffuse radiation.
+    """Solar radiation extinction.
+
+    Return solar radiation extinction coefficient of a canopy of black leaves for
+     diffuse radiation.
 
     Args:
         x_area_ratio: average area of canopy elements projected on to the horizontal
          plane divided by the average area projected on to a vertical plane
-         leaf_area_index [m3/m3]
+        leaf_area_index: leaf area index [m3/m3]
 
     References:
         Campbell, G.S., Norman, J.M., 1998. Introduction to environmental biophysics.
