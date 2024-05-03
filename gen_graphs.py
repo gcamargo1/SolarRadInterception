@@ -1,16 +1,18 @@
 """Graphs for Light interception publication"""
+import math
+
 import matplotlib.pyplot as plt
 import numpy as np
 
+from environ_biophysics import get_solar_radiation_interception_sub_daily
 from rad_competition_methods import (
     rad_intercpt_apsim,
-    rad_intercpt_wallace,
     rad_intercpt_cycles,
+    rad_intercpt_wallace,
 )
-from environ_biophysics import get_solar_radiation_interception_sub_daily
 
 
-def gen_fig1():
+def gen_fig1() -> None:
     # Figure 1
     plt.figure(0, figsize=[8, 8])
     plt.subplot(1, 1, 1).tick_params(axis="both", which="major", labelsize=12)
@@ -26,7 +28,7 @@ def gen_fig1():
             1.55833333,
             1.94666667,
             2.335,
-            2.72333333,
+            math.e,
             3.11166667,
             3.5,
         ]
@@ -101,7 +103,7 @@ def gen_fig1():
     plt.savefig("figures/Figure1.svg")
 
 
-def gen_fig2():
+def gen_fig2() -> None:
     # Figure 2
     plt.figure(1, figsize=(8, 28))
 
@@ -349,7 +351,7 @@ def gen_fig2():
     plt.savefig("figures/Figure2.svg")
 
 
-def gen_fig3():
+def gen_fig3() -> None:
     # Figure 3 Wallace with different heights
     plt.figure(2, figsize=(16, 12))
     # Graph 3.1: lai:50/50, k:0.5/0.5, sp_height:1/0.5
@@ -735,7 +737,7 @@ def gen_fig3():
     plt.savefig("figures/Figure3.svg")
 
 
-def gen_fig4():
+def gen_fig4() -> None:
     # Figure 4 Cycles and Wallace comparison
     plt.figure(3)
     plt.subplot(1, 1, 1).tick_params(axis="both", which="major", labelsize=16)
@@ -761,8 +763,8 @@ def gen_fig4():
     height_species2 = np.ones(array_size) * height_sp2
     wallace_sp1 = np.zeros(array_size)
     wallace_sp2 = np.zeros(array_size)
-    CYCLES_SP1 = np.zeros(array_size)
-    CYCLES_SP2 = np.zeros(array_size)
+    cycles_sp1 = np.zeros(array_size)
+    cycles_sp2 = np.zeros(array_size)
     for i in range(array_size):
         wallace_sp1[i] = rad_intercpt_wallace(
             [
@@ -770,7 +772,7 @@ def gen_fig4():
                 [k_species2[i], lai_species2[i], height_species2[i]],
             ]
         )[0]
-        CYCLES_SP1[i] = rad_intercpt_cycles(
+        cycles_sp1[i] = rad_intercpt_cycles(
             [
                 [k_species1[i], lai_species1[i], height_species1[i]],
                 [k_species2[i], lai_species2[i], height_species2[i]],
@@ -782,7 +784,7 @@ def gen_fig4():
                 [k_species2[i], lai_species2[i], height_species2[i]],
             ]
         )[1]
-        CYCLES_SP2[i] = rad_intercpt_cycles(
+        cycles_sp2[i] = rad_intercpt_cycles(
             [
                 [k_species1[i], lai_species1[i], height_species1[i]],
                 [k_species2[i], lai_species2[i], height_species2[i]],
@@ -799,7 +801,7 @@ def gen_fig4():
     )
     plt.plot(
         lai_total,
-        CYCLES_SP1,
+        cycles_sp1,
         label=r"Cycles sp1 $k$=%.1f $L$%%=%.0f $h$=%.1f"
         % (k_sp1, sp1_lai_percent * 100, height_sp1),
         marker="o",
@@ -816,7 +818,7 @@ def gen_fig4():
     )
     plt.plot(
         lai_total,
-        CYCLES_SP2,
+        cycles_sp2,
         label=r"Cycles sp2 $k$=%.1f $L$%%=%.0f $h$=%.1f"
         % (k_sp2, sp2_lai_percent * 100, height_sp2),
         marker="v",
@@ -830,18 +832,18 @@ def gen_fig4():
     plt.savefig("figures/Figure4.svg")
 
 
-def gen_fig5():
+def gen_fig5() -> None:
     # Figure 5 Cycles and APSIM comparison
     fig4 = plt.figure(4)
     sp1_lai_percent = 0.33
     sp2_lai_percent = 0.33
-    SP3_LAI_PERCENT = 0.33
+    sp3_lai_percent = 0.33
     k_sp1 = 0.6
     k_sp2 = 0.6
-    K_SP3 = 0.6
+    k_sp3 = 0.6
     height_sp1 = 1
     height_sp2 = 2
-    HEIGHT_SP3 = 4
+    height_sp3 = 4
     min_lai = 0.01
     max_lai = 7
     lai_species1 = np.linspace(
@@ -850,64 +852,64 @@ def gen_fig5():
     lai_species2 = np.linspace(
         min_lai * sp2_lai_percent, max_lai * sp2_lai_percent, num=10
     )
-    LAI_SPECIES3 = np.linspace(
-        min_lai * SP3_LAI_PERCENT, max_lai * sp2_lai_percent, num=10
+    lai_species3 = np.linspace(
+        min_lai * sp3_lai_percent, max_lai * sp2_lai_percent, num=10
     )
-    lai_total = lai_species1 + lai_species2 + LAI_SPECIES3
+    lai_total = lai_species1 + lai_species2 + lai_species3
     array_size = len(lai_species1)
     k_species1 = np.ones(array_size) * k_sp1
     k_species2 = np.ones(array_size) * k_sp2
-    K_SPECIES3 = np.ones(array_size) * K_SP3
+    k_species3 = np.ones(array_size) * k_sp3
     height_species1 = np.ones(array_size) * height_sp1
     height_species2 = np.ones(array_size) * height_sp2
-    H_SPECIES3 = np.ones(array_size) * HEIGHT_SP3
+    h_species3 = np.ones(array_size) * height_sp3
     apsim_sp1 = np.zeros(array_size)
     apsim_sp2 = np.zeros(array_size)
-    APSIM_SP3 = np.zeros(array_size)
-    CYCLES_SP1 = np.zeros(array_size)
-    CYCLES_SP2 = np.zeros(array_size)
-    CYCLES_SP3 = np.zeros(array_size)
+    apsim_sp3 = np.zeros(array_size)
+    cycles_sp1 = np.zeros(array_size)
+    cycles_sp2 = np.zeros(array_size)
+    cycles_sp3 = np.zeros(array_size)
     for i in range(array_size):
         apsim_sp1[i] = rad_intercpt_apsim(
             [
                 [k_species1[i], lai_species1[i]],
                 [k_species2[i], lai_species2[i]],
-                [K_SPECIES3[i], LAI_SPECIES3[i]],
+                [k_species3[i], lai_species3[i]],
             ]
         )[0]
         apsim_sp2[i] = rad_intercpt_apsim(
             [
                 [k_species1[i], lai_species1[i]],
                 [k_species2[i], lai_species2[i]],
-                [K_SPECIES3[i], LAI_SPECIES3[i]],
+                [k_species3[i], lai_species3[i]],
             ]
         )[1]
-        APSIM_SP3[i] = rad_intercpt_apsim(
+        apsim_sp3[i] = rad_intercpt_apsim(
             [
                 [k_species1[i], lai_species1[i]],
                 [k_species2[i], lai_species2[i]],
-                [K_SPECIES3[i], LAI_SPECIES3[i]],
+                [k_species3[i], lai_species3[i]],
             ]
         )[2]
-        CYCLES_SP1[i] = rad_intercpt_cycles(
+        cycles_sp1[i] = rad_intercpt_cycles(
             [
                 [k_species1[i], lai_species1[i], height_species1[i]],
                 [k_species2[i], lai_species2[i], height_species2[i]],
-                [K_SPECIES3[i], LAI_SPECIES3[i], H_SPECIES3[i]],
+                [k_species3[i], lai_species3[i], h_species3[i]],
             ]
         )[0]
-        CYCLES_SP2[i] = rad_intercpt_cycles(
+        cycles_sp2[i] = rad_intercpt_cycles(
             [
                 [k_species1[i], lai_species1[i], height_species1[i]],
                 [k_species2[i], lai_species2[i], height_species2[i]],
-                [K_SPECIES3[i], LAI_SPECIES3[i], H_SPECIES3[i]],
+                [k_species3[i], lai_species3[i], h_species3[i]],
             ]
         )[1]
-        CYCLES_SP3[i] = rad_intercpt_cycles(
+        cycles_sp3[i] = rad_intercpt_cycles(
             [
                 [k_species1[i], lai_species1[i], height_species1[i]],
                 [k_species2[i], lai_species2[i], height_species2[i]],
-                [K_SPECIES3[i], LAI_SPECIES3[i], H_SPECIES3[i]],
+                [k_species3[i], lai_species3[i], h_species3[i]],
             ]
         )[2]
     axes1 = fig4.add_axes([0.1, 0.1, 0.8, 0.8])
@@ -922,7 +924,7 @@ def gen_fig5():
     )
     axes1.plot(
         lai_total,
-        CYCLES_SP1,
+        cycles_sp1,
         label=r"Cycles sp 1 $h$=%.0f" % (height_sp1),
         marker="o",
         color="k",
@@ -930,7 +932,7 @@ def gen_fig5():
     )
     axes1.plot(
         lai_total,
-        CYCLES_SP2,
+        cycles_sp2,
         label=r"Cycles sp 2 $h$=%.0f" % (height_sp2),
         marker="o",
         color="k",
@@ -938,8 +940,8 @@ def gen_fig5():
     )
     axes1.plot(
         lai_total,
-        CYCLES_SP3,
-        label=r"Cycles sp 3 $h$=%.0f" % (HEIGHT_SP3),
+        cycles_sp3,
+        label=r"Cycles sp 3 $h$=%.0f" % (height_sp3),
         marker="o",
         color="k",
     )
@@ -963,7 +965,7 @@ def gen_fig5():
     )
     axes2.plot(
         lai_total,
-        CYCLES_SP1 - apsim_sp1,
+        cycles_sp1 - apsim_sp1,
         label=r"Cycles sp 1 $h$=%.0f" % (height_sp1),
         marker="o",
         color="k",
@@ -971,7 +973,7 @@ def gen_fig5():
     )
     axes2.plot(
         lai_total,
-        CYCLES_SP2 - apsim_sp1,
+        cycles_sp2 - apsim_sp1,
         label=r"Cycles sp 2 $h$=%.0f" % (height_sp2),
         marker="o",
         color="k",
@@ -979,8 +981,8 @@ def gen_fig5():
     )
     axes2.plot(
         lai_total,
-        CYCLES_SP3 - apsim_sp1,
-        label=r"Cycles sp 3 $h$=%.0f" % (HEIGHT_SP3),
+        cycles_sp3 - apsim_sp1,
+        label=r"Cycles sp 3 $h$=%.0f" % (height_sp3),
         marker="o",
         color="k",
     )
@@ -991,7 +993,7 @@ def gen_fig5():
     plt.savefig("figures/Figure5.svg")
 
 
-def get_fig6():
+def get_fig6() -> None:
     # Barilot vs Cycles
     fig5 = plt.figure(5, figsize=(7, 9))
     axes1 = fig5.add_axes([0.1, 0.1, 0.8, 0.8])
@@ -1078,9 +1080,6 @@ def get_fig6():
     axes1.set_xlabel("Thermal time (C-day)", fontsize=18)
     axes1.set_ylabel("Light interception", fontsize=18)
     axes1.legend(loc="upper left", prop={"size": 14}, frameon=False)
-    total_diff = (pea_sim_li + wheat_sim_li) - (
-        pea_light_intercpt + wheat_light_intercpt
-    )
     pea_diff = abs(pea_sim_li - pea_light_intercpt)
     wheat_diff = abs(wheat_sim_li - wheat_light_intercpt)
     pea_ave_abs_bias = pea_diff.mean()

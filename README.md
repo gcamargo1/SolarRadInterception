@@ -23,11 +23,11 @@ compared for two species, the Cycles and Wallace methods yielded similar results
 Cycles method successfully combined the best attributes of the APSIM and Wallace
 methods: an unlimited number of species with different heights. The simulations show
 that representing competition becomes important in species with the same light extinction
-coefficient and leaf area index (L), but different heights, when the total canopy L is 
+coefficient and leaf area index (L), but different heights, when the total canopy L is
 larger than 2 m2/m2. The Cycles method allows simulating in a relatively simple fashion the
 light interception of different species in the canopy. This method can be easily integrated
 in agroecosystems models to simulate inter-specific competition in multi-species
-canopies.  
+canopies.
 
 ## Reference
 Camargo G.G.T. 2015. Modeling light interception in multi-species canopies. Chapter 3. pp. 26. [PhD Dissertation](https://etda.libraries.psu.edu/files/final_submissions/10226). The Pennsylvania State University.

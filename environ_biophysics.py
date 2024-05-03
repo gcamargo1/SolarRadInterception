@@ -33,23 +33,24 @@ def get_height_weight_factor(
         return 1
 
     # If species in shorter than canopy average
-    elif height_dom < 1:
+    if height_dom < 1:
         return ((height_dom - 1) * (suppressed_fact - 1)) / (0 - 1) + 1
 
     # If species in taller than canopy average
-    else:
-        return 1 + (height_dom - 1) / (number_species - 1) * (dominant_fact - 1)
+    return 1 + (height_dom - 1) / (number_species - 1) * (dominant_fact - 1)
 
 
 def get_optical_air_mass(atm_press: float, solar_zenith_angle: float) -> float:
-    """Return optical air mass, or the ratio of slant path length through the atmosphere to zenith path length.
+    """Return optical air mass, or the ratio of slant path length through the
+     atmosphere to zenith path length.
 
     Args:
         atm_press: [kPa]
         solar_zenith_angle: [deg]
 
     References:
-        Campbell, G. S., and J. M. Norman. 1998. Introduction to environmental biophysics. Springer, New York. Eq. 11.12
+        Campbell, G. S., and J. M. Norman. 1998. Introduction to environmental
+         biophysics. Springer, New York. Eq. 11.12
 
     Examples:
         >>> get_optical_air_mass(100, 50)
@@ -57,12 +58,12 @@ def get_optical_air_mass(atm_press: float, solar_zenith_angle: float) -> float:
         >>> get_optical_air_mass(91.6, 30)
         1.0441319774485631
     """
-    SEA_LEVEL_ATM_PRSSR = 101.3
-    assert 38 < atm_press <= SEA_LEVEL_ATM_PRSSR
+    sea_level_atm_prssr = 101.3
+    assert 38 < atm_press <= sea_level_atm_prssr
     assert solar_zenith_angle >= 0
-    DEG_TO_RAD = math.pi / 180.0
-    solar_zenith_angle *= DEG_TO_RAD
-    return atm_press / (SEA_LEVEL_ATM_PRSSR * math.cos(solar_zenith_angle))
+    deg_to_rad = math.pi / 180.0
+    solar_zenith_angle *= deg_to_rad
+    return atm_press / (sea_level_atm_prssr * math.cos(solar_zenith_angle))
 
 
 def get_solar_radiation_extinction_coeff_black_beam(
@@ -73,10 +74,12 @@ def get_solar_radiation_extinction_coeff_black_beam(
 
     Args:
         solar_zenith_angle: rad
-        x_area_ratio: average area of canopy elements projected on to the horizontal plane divided by the average area projected on to a vertical plane
+        x_area_ratio: average area of canopy elements projected on to the horizontal
+         plane divided by the average area projected on to a vertical plane
 
     References:
-         Campbell, G.S., Norman, J.M., 1998. Introduction to environmental biophysics. Springer, New York. page 251. Eq. 15.4
+         Campbell, G.S., Norman, J.M., 1998. Introduction to environmental biophysics.
+          Springer, New York. page 251. Eq. 15.4
 
     Examples:
         >>> get_solar_radiation_extinction_coeff_black_beam(0.087, 0)
@@ -94,14 +97,17 @@ def get_solar_radiation_extinction_coeff_black_beam(
 def get_solar_radiation_extinction_coeff_black_diff(
     x_area_ratio: float, leaf_area_index: float
 ) -> float:
-    """Return solar radiation extinction coefficient of a canopy of black leaves for diffuse radiation.
+    """Return solar radiation extinction coefficient of a canopy of black leaves for
+    diffuse radiation.
 
     Args:
-        x_area_ratio: average area of canopy elements projected on to the horizontal plane divided by the average area projected on to a vertical plane
-        leaf_area_index: m3/m3
+        x_area_ratio: average area of canopy elements projected on to the horizontal
+         plane divided by the average area projected on to a vertical plane
+         leaf_area_index [m3/m3]
 
     References:
-        Campbell, G.S., Norman, J.M., 1998. Introduction to environmental biophysics. Springer, New York. Eq. 15.5
+        Campbell, G.S., Norman, J.M., 1998. Introduction to environmental biophysics.
+         Springer, New York. Eq. 15.5
 
     Examples:
         >>> get_solar_radiation_extinction_coeff_black_diff(2, 0.1)
@@ -110,10 +116,10 @@ def get_solar_radiation_extinction_coeff_black_diff(
         0.9099461266386164
     """
     assert (x_area_ratio and leaf_area_index) >= 0
-    STEP_SIZE = 90
-    MAX_ANGLE = math.pi / 2
+    step_size = 90
+    max_angle = math.pi / 2
     transm_diff = 0
-    diff_ang = MAX_ANGLE / STEP_SIZE
+    diff_ang = max_angle / step_size
     diff_ang_center = 0.5 * diff_ang
     angle = diff_ang
     # Integration loop
@@ -125,7 +131,7 @@ def get_solar_radiation_extinction_coeff_black_diff(
         )
         transm_diff += 2 * transm_beam * math.sin(angle) * math.cos(angle) * diff_ang
         angle = angle + diff_ang_center + diff_ang
-        if angle > (MAX_ANGLE + diff_ang):
+        if angle > (max_angle + diff_ang):
             break
     return -math.log(transm_diff) / leaf_area_index
 
@@ -147,12 +153,13 @@ def get_solar_beam_fraction(
         0.2892276326469122
 
     References:
-        Campbell, G. S., and J. M. Norman. 1998. Introduction to environmental biophysics. Springer, New York. Ch. 11
+        Campbell, G. S., and J. M. Norman. 1998. Introduction to environmental
+         biophysics. Springer, New York. Ch. 11
     """
     assert 0 <= solar_zenith_angle <= 90
     assert 0 <= atm_transmittance <= 1
-    DEG_TO_RAD = math.pi / 180.0
-    solar_zenith_angle *= DEG_TO_RAD
+    deg_to_rad = math.pi / 180.0
+    solar_zenith_angle *= deg_to_rad
     optical_air_mass = get_optical_air_mass(atm_press, solar_zenith_angle)  # 11.12
     solar_perpend_frac = atm_transmittance**optical_air_mass  # Eq. 11.11
     return solar_perpend_frac * math.cos(solar_zenith_angle)  # 11.8
@@ -169,7 +176,8 @@ def get_solar_diffuse_fraction(
         atm_transmittance: 0.75 for clear sky
 
     References:
-        Campbell, G. S., and J. M. Norman. 1998. Introduction to environmental biophysics. Springer, New York. Ch. 11
+        Campbell, G. S., and J. M. Norman. 1998. Introduction to environmental
+         biophysics. Springer, New York. Ch. 11
 
     Examples:
         >>> get_solar_diffuse_fraction(101.3, 0, 0.75)
@@ -180,8 +188,8 @@ def get_solar_diffuse_fraction(
     assert 0 <= solar_zenith_angle <= 90
     assert 0 <= atm_transmittance <= 1
 
-    DEG_TO_RAD = math.pi / 180.0
-    solar_zenith_angle *= DEG_TO_RAD
+    deg_to_rad = math.pi / 180.0
+    solar_zenith_angle *= deg_to_rad
     optical_air_mass = get_optical_air_mass(atm_press, solar_zenith_angle)  # 11.12
     return (
         0.3 * (1 - atm_transmittance**optical_air_mass) * math.cos(solar_zenith_angle)
@@ -204,15 +212,18 @@ def get_solar_radiation_interception_sub_daily(
         atm_press: atmospheric pressure
         leaf_transm: leaf transmission [0-1]
         leaf_area_index: leaf area index array
-        x_sp1: average area of canopy elements projected on to the horizontal plane divided by the average area projected on to a vertical plane for species 1
-        x_sp2: average area of canopy elements projected on to the horizontal plane divided by the average area projected on to a vertical plane for species 2
+        x_sp1: average area of canopy elements projected on to the horizontal plane
+         divided by the average area projected on to a vertical plane for species 1
+        x_sp2: average area of canopy elements projected on to the horizontal plane
+         divided by the average area projected on to a vertical plane for species 2
         angles_deg: angles range in degrees
 
     References:
-         Campbell, G. S., and J. M. Norman. 1998. Introduction to environmental biophysics. Springer, New York.
+         Campbell, G. S., and J. M. Norman. 1998. Introduction to environmental
+          biophysics. Springer, New York.
     """
-    DEG_TO_RAD = math.pi / 180
-    angles = angles_deg * DEG_TO_RAD
+    deg_to_rad = math.pi / 180
+    angles = angles_deg * deg_to_rad
     beam_frac = np.zeros(len(angles))
     diff_frac = np.zeros(len(angles))
     total_intercpt = np.zeros(len(angles))

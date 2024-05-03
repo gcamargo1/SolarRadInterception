@@ -7,7 +7,7 @@ from environ_biophysics import get_height_weight_factor
 
 
 def rad_intercpt_cycles(
-    crop_list: tuple[list[float | int], list[float | int], list[float]]
+    crop_list: tuple[list[float | int], list[float | int], list[float]],
 ) -> np.array:
     """Returns solar radiation intercepted on each species.
 
@@ -124,7 +124,7 @@ def rad_intercpt_cycles(
 
 
 def rad_intercpt_wallace(
-    crop_list: tuple[list[float | int], list[float | int]]
+    crop_list: tuple[list[float | int], list[float | int]],
 ) -> np.array:
     """Returns radiation intercepted on each species.
 
@@ -135,23 +135,23 @@ def rad_intercpt_wallace(
             height: plant height [m]
 
     References:
-        Wallace, J.S., 1997. Evaporation and radiation interception by neighbouring plants. Quarterly Journal of the
-         Royal Meteorological Society 123, 1885-1905.
+        Wallace, J.S., 1997. Evaporation and radiation interception by neighbouring
+         plants. Quarterly Journal of the Royal Meteorological Society 123, 1885-1905.
 
     Examples:
         >>> rad_intercpt_wallace(([0.5, 1, 1], [0.7, 3, 1]))
         [0.22082609516300733, 0.7049003266226588]
     """
     # Checking input values
-    assert len(crop_list) == 2, "Only two species allowed"
+    max_species_number = 2
+    max_inputs_per_species = 3
+    assert len(crop_list) == max_species_number, "Only two species allowed"
     assert (
-        len(crop_list[0]) == 3
-    ), "Only 3 inputs per species: ext_coeff, LAI,\
-                                    height"
+        len(crop_list[0]) == max_inputs_per_species
+    ), "Only 3 inputs per species: ext_coeff, LAI, height"
     assert (
-        len(crop_list[1]) == 3
-    ), "Only 3 inputs per species: ext_coeff, LAI,\
-                                    height"
+        len(crop_list[1]) == max_inputs_per_species
+    ), "Only 3 inputs per species: ext_coeff, LAI, height"
     # Read inputs
     extinction_coeff1 = crop_list[0][0]
     extinction_coeff2 = crop_list[1][0]
@@ -180,7 +180,7 @@ def rad_intercpt_wallace(
 
 
 def rad_intercpt_apsim(
-    crop_list: tuple[list[float | int], list[float | int]]
+    crop_list: tuple[list[float | int], list[float | int]],
 ) -> np.array:
     """Returns rad intercepted on each species.
 
@@ -190,7 +190,11 @@ def rad_intercpt_apsim(
         leaf_area_index: leaf area index (m2/m2)
 
     References:
-        Carberry, P.S., Adiku, S.G.K., McCown, R.L., Keating, B.A., 1996.Application of the APSIM cropping systems model to intercropping systems, in: Ito, C., Johansen, C., Adu-Gyamfi, K., Katayama, K., Kumar-Rao, J.V.D.K., Rego, T.J. (Eds.), Dynamics of roots and nitrogen in cropping systems of the semi-arid tropics. Japan Int. Res. Centre Agric.Sci, pp. 637-648.
+        Carberry, P.S., Adiku, S.G.K., McCown, R.L., Keating, B.A., 1996.Application of
+         the APSIM cropping systems model to intercropping systems, in: Ito, C.,
+         Johansen, C., Adu-Gyamfi, K., Katayama, K., Kumar-Rao, J.V.D.K., Rego,
+         T.J. (Eds.), Dynamics of roots and nitrogen in cropping systems of the
+         semi-arid tropics. Japan Int. Res. Centre Agric.Sci, pp. 637-648.
 
     Examples:
         >>> rad_intercpt_apsim(([0.5, 1],[0.7, 3]))
