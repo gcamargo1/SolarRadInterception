@@ -2,8 +2,7 @@
 import math
 
 import numpy as np
-
-from environ_biophysics import get_height_weight_factor
+from environmental_biophysics.solar_radiation import get_height_weight_factor
 
 
 def rad_intercpt_cycles(

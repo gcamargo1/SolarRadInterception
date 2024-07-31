@@ -3,8 +3,10 @@ import math
 
 import matplotlib.pyplot as plt
 import numpy as np
+from environmental_biophysics.solar_radiation import (
+    get_solar_radiation_interception_sub_daily,
+)
 
-from environ_biophysics import get_solar_radiation_interception_sub_daily
 from rad_competition_methods import (
     rad_intercpt_apsim,
     rad_intercpt_cycles,
