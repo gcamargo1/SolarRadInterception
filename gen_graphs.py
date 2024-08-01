@@ -931,7 +931,7 @@ def gen_fig5() -> None:
     axes1.plot(
         lai_total,
         cycles_sp1,
-        label=r"Cycles sp 1 $h$=%.0f" % (height_sp1),
+        label=r"Cycles sp 1 $h$=%.0f" % height_sp1,
         marker="o",
         color="k",
         markerfacecolor="white",
@@ -939,7 +939,7 @@ def gen_fig5() -> None:
     axes1.plot(
         lai_total,
         cycles_sp2,
-        label=r"Cycles sp 2 $h$=%.0f" % (height_sp2),
+        label=r"Cycles sp 2 $h$=%.0f" % height_sp2,
         marker="o",
         color="k",
         markerfacecolor="gray",
@@ -947,19 +947,19 @@ def gen_fig5() -> None:
     axes1.plot(
         lai_total,
         cycles_sp3,
-        label=r"Cycles sp 3 $h$=%.0f" % (height_sp3),
+        label=r"Cycles sp 3 $h$=%.0f" % height_sp3,
         marker="o",
         color="k",
     )
-    axes1.set_ylabel("Light interception", fontsize=18, labelpad=8)
+    axes1.set_ylabel("Light interception", fontsize=16, labelpad=0)
     axes1.set_xlabel(
-        "Total leaf area index " + r"(m$^2$ m$^{-2}$)", fontsize=18, labelpad=8
+        "Total leaf area index " + r"(m$^2$ m$^{-2}$)", fontsize=16, labelpad=0
     )
     axes1.set_xlim([0, 7])
     axes1.set_ylim([0, 1])
-    axes1.legend(loc="upper left", prop={"size": 16}, frameon=False)
-    axes1.xaxis.set_tick_params(labelsize=16)
-    axes1.yaxis.set_tick_params(labelsize=16)
+    axes1.legend(loc="upper left", prop={"size": 12}, frameon=False)
+    axes1.xaxis.set_tick_params(labelsize=12)
+    axes1.yaxis.set_tick_params(labelsize=12)
     # Figure 4 Error between Cycles and APSIM comparison
     axes2.plot(
         lai_total,
@@ -972,7 +972,7 @@ def gen_fig5() -> None:
     axes2.plot(
         lai_total,
         cycles_sp1 - apsim_sp1,
-        label=r"Cycles sp 1 $h$=%.0f" % (height_sp1),
+        label=r"Cycles sp 1 $h$=%.0f" % height_sp1,
         marker="o",
         color="k",
         markerfacecolor="white",
@@ -980,7 +980,7 @@ def gen_fig5() -> None:
     axes2.plot(
         lai_total,
         cycles_sp2 - apsim_sp1,
-        label=r"Cycles sp 2 $h$=%.0f" % (height_sp2),
+        label=r"Cycles sp 2 $h$=%.0f" % height_sp2,
         marker="o",
         color="k",
         markerfacecolor="gray",
@@ -992,10 +992,11 @@ def gen_fig5() -> None:
         marker="o",
         color="k",
     )
-    axes2.set_ylabel("Difference", fontsize=18, labelpad=8)
+    axes2.set_ylabel("Difference", fontsize=12, labelpad=8)
     axes2.set_yticks([-0.2, -0.1, 0.0, 0.1, 0.2])
-    axes2.yaxis.set_tick_params(labelsize=16)
-    axes2.xaxis.set_tick_params(labelsize=16)
+    axes2.set_xticks([0, 1, 2, 3, 4, 5, 6, 7])
+    axes2.yaxis.set_tick_params(labelsize=12)
+    axes2.xaxis.set_tick_params(labelsize=12)
     plt.savefig("figures/Figure5.svg")
 
 
