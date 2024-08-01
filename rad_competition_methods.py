@@ -1,4 +1,5 @@
 """Solar radiation interception methods."""
+
 from __future__ import annotations
 
 import math
@@ -192,7 +193,7 @@ def rad_intercpt_wallace(
 
 
 def _read_rad_intercpt_wallace_inputs(
-    crop_list: tuple[list[float | int], list[float | int]]
+    crop_list: tuple[list[float | int], list[float | int]],
 ):
     extinction_coeff1 = crop_list[0][0]
     extinction_coeff2 = crop_list[1][0]

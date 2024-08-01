@@ -16,6 +16,9 @@ requires-python = ">= 3.8"
 requires = ["pdm-backend"]
 build-backend = "pdm.backend"
 
+[tool.black]
+line-length = 88
+
 [tool.pyright]
 venvPath = "."          # rye installs the venv in the current dir
 venv = ".venv"          #       in a folder called `.venv`
@@ -35,6 +38,8 @@ docs = "mkdocs serve"
 # Ruff config
 [tool.ruff]
 extend-exclude = ["tests"]
+line-length = 88
+indent-width = 4
 
 [tool.ruff.lint]
 preview = true
@@ -115,6 +120,8 @@ ignore = ["ANN202",
     "B023", # affects pandas lambda apply
     "PD015", # let's use pd.merge
     "COM812", # conficts stuff
+    "PLR0914",  # too many local variables > 15
+    "PLR0915"  # Too many statements (> 50)
 ]
 
 [tool.ruff.lint.pydocstyle]

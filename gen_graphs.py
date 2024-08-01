@@ -71,7 +71,7 @@ def gen_fig1() -> None:
     plt.plot(
         tot_lai,
         sp1,
-        label=r"Sub-daily sp1 %s=0.5 $L$%%=%.0f" % (r"$\chi$", sp1_lai_percent * 100),
+        label=rf"Sub-daily sp1 $\chi$=0.5 $L$%={sp1_lai_percent * 100:.0f}",
         marker="o",
         color="k",
         markerfacecolor="white",
@@ -79,7 +79,7 @@ def gen_fig1() -> None:
     plt.plot(
         tot_lai,
         sp2,
-        label=r"Sub-daily sp2 %s=2 $L$%%=%.0f" % (r"$\chi$", sp1_lai_percent * 100),
+        label=rf"Sub-daily sp2 $\chi$=2 $L$%={sp1_lai_percent * 100:.0f}",
         marker="v",
         color="k",
         markerfacecolor="white",
@@ -87,14 +87,14 @@ def gen_fig1() -> None:
     plt.plot(
         lai_total,
         apsim_sp1,
-        label=r"Daily Cycles sp1 $k$=%.1f $L$%%=%.0f" % (k_sp1, sp1_lai_percent * 100),
+        label=rf"Daily Cycles sp1 $k$={k_sp1:.1f} $L$%={sp1_lai_percent * 100:.0f}",
         marker="o",
         color="k",
     )
     plt.plot(
         lai_total,
         apsim_sp2,
-        label=r"Daily Cycles sp2 $k$=%.1f $L$%%=%.0f" % (k_sp2, sp2_lai_percent * 100),
+        label=rf"Daily Cycles sp2 $k$={k_sp2:.1f} $L$%={sp2_lai_percent * 100:.0f}",
         marker="v",
         color="k",
     )
@@ -155,7 +155,7 @@ def gen_fig2() -> None:
     plt.plot(
         lai_total,
         wallace_sp1,
-        label=r"Wallace sp1 $k$=%.1f $L$%%=%.0f" % (k_sp1, sp1_lai_percent * 100),
+        label=rf"Wallace sp1 $k$={k_sp1:.1f} $L$%={sp1_lai_percent * 100:.0f}",
         marker="o",
         color="k",
         markerfacecolor="white",
@@ -163,14 +163,14 @@ def gen_fig2() -> None:
     plt.plot(
         lai_total,
         apsim_sp1,
-        label=r"Cycles sp1 $k$=%.1f $L$%%=%.0f" % (k_sp1, sp1_lai_percent * 100),
+        label=rf"Cycles sp1 $k$={k_sp1:.1f} $L$%={sp1_lai_percent * 100:.0f}",
         marker="o",
         color="k",
     )
     plt.plot(
         lai_total,
         wallace_sp2,
-        label=r"Wallace sp2 $k$=%.1f $L$%%=%.0f" % (k_sp2, sp2_lai_percent * 100),
+        label=rf"Wallace sp2 $k$={k_sp2:.1f} $L$%={sp2_lai_percent * 100:.0f}",
         marker="v",
         color="k",
         markerfacecolor="white",
@@ -178,7 +178,7 @@ def gen_fig2() -> None:
     plt.plot(
         lai_total,
         apsim_sp2,
-        label=r"Cycles sp2 $k$=%.1f $L$%%=%.0f" % (k_sp2, sp2_lai_percent * 100),
+        label=rf"Cycles sp2 $k$={k_sp2:.1f} $L$%={sp2_lai_percent * 100:.0f}",
         marker="v",
         color="k",
     )
@@ -234,7 +234,7 @@ def gen_fig2() -> None:
     plt.plot(
         lai_total,
         wallace_sp1,
-        label=r"Wallace sp1 $k$=%.1f $L$%%=%.0f" % (k_sp1, sp1_lai_percent * 100),
+        label=rf"Wallace sp1 $k$={k_sp1:.1f} $L$%={sp1_lai_percent * 100:.0f}",
         marker="o",
         color="k",
         markerfacecolor="white",
@@ -242,14 +242,14 @@ def gen_fig2() -> None:
     plt.plot(
         lai_total,
         apsim_sp1,
-        label=r"Cycles sp1 $k$=%.1f $L$%%=%.0f" % (k_sp1, sp1_lai_percent * 100),
+        label=rf"Cycles sp1 $k$={k_sp1:.1f} $L$%={sp1_lai_percent * 100:.0f}",
         marker="o",
         color="k",
     )
     plt.plot(
         lai_total,
         wallace_sp2,
-        label=r"Wallace sp2 $k$=%.1f $L$%%=%.0f" % (k_sp2, sp2_lai_percent * 100),
+        label=rf"Wallace sp2 $k$={k_sp2:.1f} $L$%={sp2_lai_percent * 100:.0f}",
         marker="v",
         color="k",
         markerfacecolor="white",
@@ -257,7 +257,7 @@ def gen_fig2() -> None:
     plt.plot(
         lai_total,
         apsim_sp2,
-        label=r"Cycles sp2 $k$=%.1f $L$%%=%.0f" % (k_sp2, sp2_lai_percent * 100),
+        label=rf"Cycles sp2 $k$={k_sp2:.1f} $L$%={sp2_lai_percent * 100:.0f}",
         marker="v",
         color="k",
     )
@@ -313,7 +313,7 @@ def gen_fig2() -> None:
     plt.plot(
         lai_total,
         wallace_sp1,
-        label=r"Wallace sp1 $k$=%.1f $L$%%=%.0f" % (k_sp1, sp1_lai_percent * 100),
+        label=rf"Wallace sp1 $k$={k_sp1:.1f} $L$%={sp1_lai_percent * 100:.0f}",
         marker="o",
         color="k",
         markerfacecolor="white",
@@ -321,14 +321,14 @@ def gen_fig2() -> None:
     plt.plot(
         lai_total,
         apsim_sp1,
-        label=r"Cycles sp1 $k$=%.1f $L$%%=%.0f" % (k_sp1, sp1_lai_percent * 100),
+        label=rf"Cycles sp1 $k$={k_sp1:.1f} $L$%={sp1_lai_percent * 100:.0f}",
         marker="o",
         color="k",
     )
     plt.plot(
         lai_total,
         wallace_sp2,
-        label=r"Wallace sp2 $k$=%.1f $L$%%=%.0f" % (k_sp2, sp2_lai_percent * 100),
+        label=rf"Wallace sp2 $k$={k_sp2:.1f} $L$%={sp2_lai_percent * 100:.0f}",
         marker="v",
         color="k",
         markerfacecolor="white",
@@ -336,7 +336,7 @@ def gen_fig2() -> None:
     plt.plot(
         lai_total,
         apsim_sp2,
-        label=r"Cycles sp2 $k$=%.1f $L$%%=%.0f" % (k_sp2, sp2_lai_percent * 100),
+        label=rf"Cycles sp2 $k$={k_sp2:.1f} $L$%={sp2_lai_percent * 100:.0f}",
         marker="v",
         color="k",
     )
@@ -398,16 +398,14 @@ def gen_fig3() -> None:
     plt.plot(
         lai_total,
         wallace_sp1,
-        label=r"sp 1 $k$=%.1f $L$%%=%.0f $h$=%.1f"
-        % (k_sp1, sp1_lai_percent * 100, height_sp1),
+        label=rf"sp 1 $k$={k_sp1:.1f} $L$%={sp1_lai_percent * 100:.0f} $h$={height_sp1:.1f}",  # noqa: E501
         marker="o",
         color="k",
     )
     plt.plot(
         lai_total,
         wallace_sp2,
-        label=r"sp 2 $k$=%.1f $L$%%=%.0f $h$=%.1f"
-        % (k_sp2, sp2_lai_percent * 100, height_sp2),
+        label=rf"sp 2 $k$={k_sp2:.1f} $L$%={sp2_lai_percent * 100:.0f} $h$={height_sp2:.1f}",  # noqa: E501
         marker="o",
         color="k",
         markerfacecolor="white",
@@ -459,16 +457,14 @@ def gen_fig3() -> None:
     plt.plot(
         lai_total,
         wallace_sp1,
-        label=r"sp 1 $k$=%.1f $L$%%=%.0f $h$=%.1f"
-        % (k_sp1, sp1_lai_percent * 100, height_sp1),
+        label=rf"sp 1 $k$={k_sp1:.1f} $L$%={sp1_lai_percent * 100:.0f} $h$={height_sp1:.1f}",  # noqa: E501
         marker="o",
         color="k",
     )
     plt.plot(
         lai_total,
         wallace_sp2,
-        label=r"sp 2 $k$=%.1f $L$%%=%.0f $h$=%.1f"
-        % (k_sp2, sp2_lai_percent * 100, height_sp2),
+        label=rf"sp 2 $k$={k_sp2:.1f} $L$%={sp2_lai_percent * 100:.0f} $h$={height_sp2:.1f}",  # noqa: E501
         marker="o",
         color="k",
         markerfacecolor="white",
@@ -520,16 +516,14 @@ def gen_fig3() -> None:
     plt.plot(
         lai_total,
         wallace_sp1,
-        label=r"sp 1 $k$=%.1f $L$%%=%.0f $h$=%.1f"
-        % (k_sp1, sp1_lai_percent * 100, height_sp1),
+        label=rf"sp 1 $k$={k_sp1:.1f} $L$%={sp1_lai_percent * 100:.0f} $h$={height_sp1:.1f}",  # noqa: E501
         marker="o",
         color="k",
     )
     plt.plot(
         lai_total,
         wallace_sp2,
-        label=r"sp 2 $k$=%.1f $L$%%=%.0f $h$=%.1f"
-        % (k_sp2, sp2_lai_percent * 100, height_sp2),
+        label=rf"sp 2 $k$={k_sp2:.1f} $L$%={sp2_lai_percent * 100:.0f} $h$={height_sp2:.1f}",  # noqa: E501
         marker="o",
         color="k",
         markerfacecolor="white",
@@ -581,16 +575,14 @@ def gen_fig3() -> None:
     plt.plot(
         lai_total,
         wallace_sp1,
-        label=r"sp 1 $k$=%.1f $L$%%=%.0f $h$=%.1f"
-        % (k_sp1, sp1_lai_percent * 100, height_sp1),
+        label=rf"sp 1 $k$={k_sp1:.1f} $L$%={sp1_lai_percent * 100:.0f} $h$={height_sp1:.1f}",  # noqa: E501
         marker="o",
         color="k",
     )
     plt.plot(
         lai_total,
         wallace_sp2,
-        label=r"sp 2 $k$=%.1f $L$%%=%.0f $h$=%.1f"
-        % (k_sp2, sp2_lai_percent * 100, height_sp2),
+        label=rf"sp 2 $k$={k_sp2:.1f} $L$%={sp2_lai_percent * 100:.0f} $h$={height_sp2:.1f}",  # noqa: E501
         marker="o",
         color="k",
         markerfacecolor="white",
@@ -644,16 +636,14 @@ def gen_fig3() -> None:
     plt.plot(
         lai_total,
         wallace_sp1,
-        label=r"sp 1 $k$=%.1f $L$%%=%.0f $h$=%.1f"
-        % (k_sp1, sp1_lai_percent * 100, height_sp1),
+        label=rf"sp 1 $k$={k_sp1:.1f} $L$%={sp1_lai_percent * 100:.0f} $h$={height_sp1:.1f}",  # noqa: E501
         marker="o",
         color="k",
     )
     plt.plot(
         lai_total,
         wallace_sp2,
-        label=r"sp 2 $k$=%.1f $L$%%=%.0f $h$=%.1f"
-        % (k_sp2, sp2_lai_percent * 100, height_sp2),
+        label=rf"sp 2 $k$={k_sp2:.1f} $L$%={sp2_lai_percent * 100:.0f} $h$={height_sp2:.1f}",  # noqa: E501
         marker="o",
         color="k",
         markerfacecolor="white",
@@ -706,16 +696,14 @@ def gen_fig3() -> None:
     plt.plot(
         lai_total,
         wallace_sp1,
-        label=r"sp 1 $k$=%.1f $L$%%=%.0f $h$=%.1f"
-        % (k_sp1, sp1_lai_percent * 100, height_sp1),
+        label=rf"sp 1 $k$={k_sp1:.1f} $L$%={sp1_lai_percent * 100:.0f} $h$={height_sp1:.1f}",  # noqa: E501
         marker="o",
         color="k",
     )
     plt.plot(
         lai_total,
         wallace_sp2,
-        label=r"sp 2 $k$=%.1f $L$%%=%.0f $h$=%.1f"
-        % (k_sp2, sp2_lai_percent * 100, height_sp2),
+        label=rf"sp 2 $k$={k_sp2:.1f} $L$%={sp2_lai_percent * 100:.0f} $h$={height_sp2:.1f}",  # noqa: E501
         marker="o",
         color="k",
         markerfacecolor="white",
@@ -798,8 +786,7 @@ def gen_fig4() -> None:
     plt.plot(
         lai_total,
         wallace_sp1,
-        label=r"Wallace sp1 $k$=%.1f $L$%%=%.0f $h$=%.1f"
-        % (k_sp1, sp1_lai_percent * 100, height_sp1),
+        label=rf"Wallace sp1 $k$={k_sp1:.1f} $L$%={sp1_lai_percent * 100:.0f} $h$={height_sp1:.1f}",  # noqa: E501
         marker="o",
         color="k",
         markerfacecolor="white",
@@ -807,25 +794,23 @@ def gen_fig4() -> None:
     plt.plot(
         lai_total,
         cycles_sp1,
-        label=r"Cycles sp1 $k$=%.1f $L$%%=%.0f $h$=%.1f"
-        % (k_sp1, sp1_lai_percent * 100, height_sp1),
+        label=rf"Cycles sp1 $k$={k_sp1:.1f} $L$%={sp1_lai_percent * 100:.0f} $h$={height_sp1:.1f}",  # noqa: E501
         marker="o",
         color="k",
     )
     plt.plot(
         lai_total,
         wallace_sp2,
-        label=r"Wallace sp2 $k$=%.1f $L$%%=%.0f $h$=%.1f"
-        % (k_sp2, sp2_lai_percent * 100, height_sp2),
+        label=rf"Wallace sp2 $k$={k_sp2:.1f} $L$%={sp2_lai_percent * 100:.0f} $h$={height_sp2:.1f}",  # noqa: E501
         marker="v",
         color="k",
         markerfacecolor="white",
     )
+
     plt.plot(
         lai_total,
         cycles_sp2,
-        label=r"Cycles sp2 $k$=%.1f $L$%%=%.0f $h$=%.1f"
-        % (k_sp2, sp2_lai_percent * 100, height_sp2),
+        label=rf"Cycles sp2 $k$={k_sp2:.1f} $L$%={sp2_lai_percent * 100:.0f} $h$={height_sp2:.1f}",  # noqa: E501
         marker="v",
         color="k",
     )
@@ -931,7 +916,7 @@ def gen_fig5() -> None:
     axes1.plot(
         lai_total,
         cycles_sp1,
-        label=r"Cycles sp 1 $h$=%.0f" % height_sp1,
+        label=rf"Cycles sp 1 $h$={height_sp1:.0f}",
         marker="o",
         color="k",
         markerfacecolor="white",
@@ -939,7 +924,7 @@ def gen_fig5() -> None:
     axes1.plot(
         lai_total,
         cycles_sp2,
-        label=r"Cycles sp 2 $h$=%.0f" % height_sp2,
+        label=rf"Cycles sp 2 $h$={height_sp2:.0f}",
         marker="o",
         color="k",
         markerfacecolor="gray",
@@ -947,7 +932,7 @@ def gen_fig5() -> None:
     axes1.plot(
         lai_total,
         cycles_sp3,
-        label=r"Cycles sp 3 $h$=%.0f" % height_sp3,
+        label=rf"Cycles sp 3 $h$={height_sp3:.0f}",
         marker="o",
         color="k",
     )
@@ -972,7 +957,7 @@ def gen_fig5() -> None:
     axes2.plot(
         lai_total,
         cycles_sp1 - apsim_sp1,
-        label=r"Cycles sp 1 $h$=%.0f" % height_sp1,
+        label=rf"Cycles sp 1 $h$={height_sp1:.0f}",
         marker="o",
         color="k",
         markerfacecolor="white",
@@ -980,7 +965,7 @@ def gen_fig5() -> None:
     axes2.plot(
         lai_total,
         cycles_sp2 - apsim_sp1,
-        label=r"Cycles sp 2 $h$=%.0f" % height_sp2,
+        label=rf"Cycles sp 2 $h$={height_sp2:.0f}",
         marker="o",
         color="k",
         markerfacecolor="gray",
@@ -988,7 +973,7 @@ def gen_fig5() -> None:
     axes2.plot(
         lai_total,
         cycles_sp3 - apsim_sp1,
-        label=r"Cycles sp 3 $h$=%.0f" % height_sp3,
+        label=rf"Cycles sp 3 $h$={height_sp3:.0f}",
         marker="o",
         color="k",
     )
