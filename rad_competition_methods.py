@@ -1,13 +1,19 @@
 """Solar radiation interception methods."""
+from __future__ import annotations
+
 import math
+from typing import TYPE_CHECKING
 
 import numpy as np
 from environmental_biophysics.solar_radiation import get_height_weight_factor
 
+if TYPE_CHECKING:
+    from numpy._typing import NDArray
+
 
 def rad_intercpt_cycles(
     crop_list: tuple[list[float | int], list[float | int], list[float]],
-) -> np.array:
+) -> NDArray:
     """Returns solar radiation intercepted on each species.
 
     Args:
@@ -124,7 +130,7 @@ def rad_intercpt_cycles(
 
 def rad_intercpt_wallace(
     crop_list: tuple[list[float | int], list[float | int]],
-) -> np.array:
+) -> list[float]:
     """Returns radiation intercepted on each species.
 
     Args:
@@ -151,23 +157,30 @@ def rad_intercpt_wallace(
     assert (
         len(crop_list[1]) == max_inputs_per_species
     ), "Only 3 inputs per species: ext_coeff, LAI, height"
+
     # Read inputs
-    extinction_coeff1 = crop_list[0][0]
-    extinction_coeff2 = crop_list[1][0]
-    leaf_area_index1 = crop_list[0][1]
-    leaf_area_index2 = crop_list[1][1]
-    height1 = crop_list[0][2]
-    height2 = crop_list[1][2]
+    (
+        extinction_coeff1,
+        extinction_coeff2,
+        height1,
+        height2,
+        leaf_area_index1,
+        leaf_area_index2,
+    ) = _read_rad_intercpt_wallace_inputs(crop_list=crop_list)
+
     transm_rad1 = math.exp(-extinction_coeff1 * leaf_area_index1)
     transm_rad2 = math.exp(-extinction_coeff2 * leaf_area_index2)
+
     # Dominant species rad interception
     rad_intercpt_dom1 = 1 - transm_rad1
     rad_intercpt_dom2 = 1 - transm_rad2
     height_fraction1 = height1 / (height1 + height2)
     height_fraction2 = height2 / (height1 + height2)
+
     # Suppressed species rad interception
     rad_intercpt_suppr1 = rad_intercpt_dom1 * transm_rad2
     rad_intercpt_suppr2 = rad_intercpt_dom2 * transm_rad1
+
     # Species rad interception
     rad_intercpt1 = rad_intercpt_suppr1 + height_fraction1 * (
         rad_intercpt_dom1 - rad_intercpt_suppr1
@@ -178,9 +191,28 @@ def rad_intercpt_wallace(
     return [rad_intercpt1, rad_intercpt2]
 
 
+def _read_rad_intercpt_wallace_inputs(
+    crop_list: tuple[list[float | int], list[float | int]]
+):
+    extinction_coeff1 = crop_list[0][0]
+    extinction_coeff2 = crop_list[1][0]
+    leaf_area_index1 = crop_list[0][1]
+    leaf_area_index2 = crop_list[1][1]
+    height1 = crop_list[0][2]
+    height2 = crop_list[1][2]
+    return (
+        extinction_coeff1,
+        extinction_coeff2,
+        height1,
+        height2,
+        leaf_area_index1,
+        leaf_area_index2,
+    )
+
+
 def rad_intercpt_apsim(
     crop_list: tuple[list[float | int], list[float | int]],
-) -> np.array:
+) -> NDArray:
     """Returns rad intercepted on each species.
 
     Args:
@@ -213,7 +245,7 @@ def rad_intercpt_apsim(
         leaf_area_index = crop_list[i][1]
         ext_coeff_leaf_area_index_prod[i] = extinction_coeff * leaf_area_index
         transm_rad_temp[i] = math.exp(-extinction_coeff * leaf_area_index)
-        cum_transm_rad = cum_transm_rad * transm_rad_temp[i]
+        cum_transm_rad *= transm_rad_temp[i]
         rad_intercpt_temp[i] = 1 - transm_rad_temp[i]
     tot_rad_intercpt = 1 - cum_transm_rad
 

@@ -1,17 +1,40 @@
-[tool.taskipy.tasks]
-coverage = "coverage html && open htmlcov/index.html"
-docs = "mkdocs serve"
-test = "pytest -s -x --cov=pyimg -vv"
+[project]
+name = "solarradinterception"
+version = "0.1.0"
+description = "Add your description here"
+authors = [
+    { name = "Gustavo Camargo", email = "ggc107@gmail.com" }
+]
+dependencies = [
+    "environmental-biophysics~=0.0.4",
+    "matplotlib~=3.9.1",
+]
+readme = "README.md"
+requires-python = ">= 3.8"
 
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+[tool.pyright]
+venvPath = "."          # rye installs the venv in the current dir
+venv = ".venv"          #       in a folder called `.venv`
+typeCheckingMode = "basic" # https://microsoft.github.io/pyright/#/comments?id=file-level-type-controls
+# strict = ["**/*.py"] use 'strict' checking on all files
+pythonVersion = "3.12"  # if library, specify the _lowest_ you supportjkhhk
 
 [tool.pytest.ini_options]
 pythonpath = "."
 addopts = "--doctest-modules"
 
+[tool.taskipy.tasks]
+coverage = "coverage html && open htmlcov/index.html"
+docs = "mkdocs serve"
+#test = "pytest -s -x --cov=pylme -vv"
+
 # Ruff config
 [tool.ruff]
 extend-exclude = ["tests"]
-target-version = "py312"
 
 [tool.ruff.lint]
 preview = true
@@ -20,7 +43,7 @@ select = [
     "E",
     "W",
     # mccabe (code complexity)
-    "C90",
+#    "C90",
     # Pyflakes
     "F",
     # pep8-naming,
@@ -49,7 +72,7 @@ select = [
     "G",
     "INP",
     "PIE",
-    "T20", # print finder
+#    "T20", # print finder
     "PYI",
     "PT",
     "Q",
@@ -62,7 +85,7 @@ select = [
     "TCH",
     "INT",
     "ARG",
-    "PTH",  # change from strings to path obj
+#    "PTH",  # change from strings to path obj
     "TD",
     "FIX",
     "ERA",
@@ -76,8 +99,7 @@ select = [
     "PERF",
     "FURB",
     "LOG",
-    "RUF",
-    "D"
+    "RUF"
 ]
 ignore = ["ANN202",
     "S101",
@@ -93,10 +115,20 @@ ignore = ["ANN202",
     "B023", # affects pandas lambda apply
     "PD015", # let's use pd.merge
     "COM812", # conficts stuff
-    "PLR0915",
-    "UP031",
-    "PLR2004"
 ]
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"
+
+[tool.rye]
+managed = true
+dev-dependencies = [
+    "pyright~=1.1.373",
+    "pytest~=8.3.2",
+]
+[tool.rye.scripts]
+fmt = "rye fmt"
+lint = "rye lint --fix"
+check = "pyright"
+test = "rye test"
+all = { chain = ["fmt", "lint", "check", "test"] }

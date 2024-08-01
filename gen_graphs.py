@@ -1,4 +1,5 @@
 """Graphs for Light interception publication."""
+
 import math
 
 import matplotlib.pyplot as plt
@@ -987,7 +988,7 @@ def gen_fig5() -> None:
     axes2.plot(
         lai_total,
         cycles_sp3 - apsim_sp1,
-        label=r"Cycles sp 3 $h$=%.0f" % (height_sp3),
+        label=r"Cycles sp 3 $h$=%.0f" % height_sp3,
         marker="o",
         color="k",
     )
@@ -1114,8 +1115,8 @@ def get_fig6() -> None:
     axes2.set_yticks([0.0, 0.05, 0.1, 0.15])
     axes2.set_xticks([0, 1000, 2000])
     axes2.set_ylabel("Absolute difference", fontsize=15, labelpad=8)
-    axes2.text(-30, 0.16, "Mean pea bias = %.3f" % pea_ave_abs_bias, fontsize=11)
-    axes2.text(-30, 0.18, "Mean wheat bias = %.3f" % wheat_ave_abs_bias, fontsize=11)
+    axes2.text(-30, 0.16, f"Mean pea bias = {pea_ave_abs_bias:.3f}", fontsize=11)
+    axes2.text(-30, 0.18, f"Mean wheat bias = {wheat_ave_abs_bias:.3f}", fontsize=11)
     plt.savefig("figures/Figure6.svg")
 
 
