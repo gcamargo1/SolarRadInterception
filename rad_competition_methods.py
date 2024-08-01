@@ -12,7 +12,7 @@ def rad_intercpt_cycles(
 
     Args:
         crop_list: list of species characteristics with three items:
-            radiation extinction coeffcoefficient
+            radiation extinction coefficients
             leaf area index [m2/m2]
             plant height [m]
 
