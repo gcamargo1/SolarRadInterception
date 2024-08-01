@@ -9,11 +9,13 @@ import numpy as np
 from environmental_biophysics.solar_radiation import get_height_weight_factor
 
 if TYPE_CHECKING:
-    from numpy._typing import NDArray
+    from numpy.typing import NDArray
 
 
 def rad_intercpt_cycles(
-    crop_list: tuple[list[float | int], list[float | int], list[float]],
+    crop_list: tuple[
+        list[float | int | NDArray], list[float | int | NDArray], list[float | NDArray]
+    ],
 ) -> NDArray:
     """Returns solar radiation intercepted on each species.
 
@@ -230,7 +232,7 @@ def rad_intercpt_apsim(
 
     Examples:
         >>> rad_intercpt_apsim(([0.5, 1],[0.7, 3]))
-        [ 0.17802431  0.74770211]
+        array([0.17802431, 0.74770211])
     """
     # Variables init
     number_species = len(crop_list)
